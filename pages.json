@@ -3,7 +3,25 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTextStyle": "white",
+				"navigationBarTitleText": "首页",
+				"navigationBarBackgroundColor": "#2B9939"
+			}
+		},
+		{
+			"path": "pages/dynamic/dynamic",
+			"style": {
+				"navigationBarTextStyle": "white",
+				"navigationBarTitleText": "动态",
+				"navigationBarBackgroundColor": "#2B9939"
+			}
+		},
+		{
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTextStyle": "white",
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#2B9939"
 			}
 		}
 	],
@@ -12,5 +30,28 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+	    "color": "#7A7E83",
+	    "selectedColor": "#1296db",
+	    "borderStyle": "black",
+	    "backgroundColor": "#ffffff",
+	    "list": [{
+	        "pagePath": "pages/index/index",
+	        "iconPath": "https://labfile.oss.aliyuncs.com/courses/4715/%E9%A6%96%E9%A1%B5%20%E9%80%89%E4%B8%AD%20(2).png",
+	        "selectedIconPath": "https://labfile.oss.aliyuncs.com/courses/4715/%E9%A6%96%E9%A1%B5%20%E9%80%89%E4%B8%AD.png",
+	        "text": "首页"
+	    }, {
+	        "pagePath": "pages/dynamic/dynamic",
+	        "iconPath": "https://labfile.oss.aliyuncs.com/courses/4715/%E5%8A%A8%E6%80%81%20(1).png",
+	        "selectedIconPath": "https://labfile.oss.aliyuncs.com/courses/4715/%E5%8A%A8%E6%80%81%20(2).png",
+	        "text": "动态"
+	    },
+		{
+		    "pagePath": "pages/my/my",
+		    "iconPath": "https://labfile.oss.aliyuncs.com/courses/4715/%E6%88%91%E7%9A%84.png",
+		    "selectedIconPath": "https://labfile.oss.aliyuncs.com/courses/4715/%E6%88%91%E7%9A%84%20(1).png",
+		    "text": "我的"
+		}]
 	}
 }
