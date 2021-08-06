@@ -2,12 +2,12 @@
 	<view class="register-content">
 		<image class="cube-logo" src="https://labfile.oss.aliyuncs.com/courses/4715/1627885535(1).png"></image>
 		<view class="register-input">
-			<input class="uni-input input" focus placeholder="请输入账号" placeholder-style="color:#cccccc"/>
-			<input class="uni-input input" focus placeholder="请输入密码" password placeholder-style="color:#cccccc"/>
-			<input class="uni-input input" focus placeholder="请确认密码" password placeholder-style="color:#cccccc"/>
+			<input class="uni-input input" focus placeholder="请输入账号" v-model="form.account" placeholder-style="color:#cccccc" />
+			<input class="uni-input input" focus placeholder="请输入密码" v-model="form.password" password placeholder-style="color:#cccccc"/>
+			<input class="uni-input input" focus placeholder="请确认密码" v-model="form.repass" password placeholder-style="color:#cccccc"/>
 		</view>
 		<view class="register-button">
-			<button class="button" type="default">注册</button>
+			<button class="button" type="default" @click="register">注册</button>
 		</view>
 		
 		<view class="relevant-description">
@@ -21,10 +21,38 @@
 	export default {
 		data() {
 			return {
-				
+			  // account:'',
+			  form: {
+				account: "",
+				password: "",
+				repass: "",
+			  },
 			}
 		},
 		methods: {
+			onLoad(){
+				// console.log("this.account",this.account)
+				console.log("this.form",this.form)
+			},
+			// 点击注册调用方法
+			register(){
+				uni.request({
+					url: 'https://121.40.227.60/register',
+					data: JSON.stringify(this.form),
+					// data: this.form,
+					method: 'POST',
+					// header: {
+					// 	'content-type':'application/json'
+					// },
+					success(res) {
+						console.log("注册成功-",res)
+					},
+					fail(err) {
+						console.log("注册失败-",err)
+					}
+				})
+			},
+			// 跳转到登录页面
 			goToLogin(){
 				uni.navigateTo({
 				    url: '/pages/login/login'
