@@ -14,10 +14,15 @@
 			<view class="description-one">已有账号，<text class="color-mark" @click="goToLogin">立即登录</text></view>
 			<view class="description-two">点击注册即代表您同意<text class="color-mark">《用户协议》</text>和<text class="color-mark">《隐私协议》</text></view>
 		</view>
+		<!-- <web-view src="https://www.baidu.com">11111111111111S</web-view> -->
+
 	</view>
 </template>
 
 <script>
+	import fetchAjax from '../../https/https.js'
+	// const { $http } = require('../../http/http.js');
+
 	export default {
 		data() {
 			return {
@@ -36,21 +41,39 @@
 			},
 			// 点击注册调用方法
 			register(){
-				uni.request({
-					url: 'https://121.40.227.60/register',
-					data: JSON.stringify(this.form),
-					// data: this.form,
-					method: 'POST',
-					// header: {
-					// 	'content-type':'application/json'
-					// },
-					success(res) {
-						console.log("注册成功-",res)
-					},
-					fail(err) {
-						console.log("注册失败-",err)
-					}
+				let opts = {
+					url: '/',
+					method: 'GET'
+				};
+				let param = {
+					deviceId: 1,
+					deviceName: 2
+				};
+				this.$myRequest.httpTokenRequest(opts, param).then(res => {
+					console.log(res.data);
+					//打印请求返回的数据
+				
+				}, error => {
+					console.log(error);
 				})
+				// uni.request({
+				// 	url:"https://www.baidu.com/",
+					
+				// 	// url: 'https://121.40.227.60:7001/register',
+				// 	// url: 'https://ssh.shiyanlou.com:7001/register',
+				// 	// data: JSON.stringify(this.form),
+				// 	// data: this.form,
+				// 	method: 'get',
+				// 	// header: {
+				// 	// 	'content-type':'application/json'
+				// 	// },
+				// 	success(res) {
+				// 		console.log("注册成功-",res)
+				// 	},
+				// 	fail(err) {
+				// 		console.log("注册失败-",err)
+				// 	}
+				// })
 			},
 			// 跳转到登录页面
 			goToLogin(){
