@@ -50,7 +50,7 @@
 					deviceName: 2
 				};
 				this.$myRequest.httpTokenRequest(opts, param).then(res => {
-					console.log(res.data);
+					console.log("res.data",res.data);
 					//打印请求返回的数据
 				
 				}, error => {
