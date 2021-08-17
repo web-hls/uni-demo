@@ -20,9 +20,6 @@
 </template>
 
 <script>
-	import fetchAjax from '../../https/https.js'
-	// const { $http } = require('../../http/http.js');
-
 	export default {
 		data() {
 			return {
@@ -36,44 +33,39 @@
 		},
 		methods: {
 			onLoad(){
-				// console.log("this.account",this.account)
 				console.log("this.form",this.form)
 			},
 			// 点击注册调用方法
 			register(){
-				let opts = {
-					url: '/',
-					method: 'GET'
-				};
-				let param = {
-					deviceId: 1,
-					deviceName: 2
-				};
-				this.$myRequest.httpTokenRequest(opts, param).then(res => {
-					console.log("res.data",res.data);
-					//打印请求返回的数据
-				
-				}, error => {
-					console.log(error);
-				})
-				// uni.request({
-				// 	url:"https://www.baidu.com/",
-					
-				// 	// url: 'https://121.40.227.60:7001/register',
-				// 	// url: 'https://ssh.shiyanlou.com:7001/register',
-				// 	// data: JSON.stringify(this.form),
-				// 	// data: this.form,
-				// 	method: 'get',
-				// 	// header: {
-				// 	// 	'content-type':'application/json'
-				// 	// },
-				// 	success(res) {
-				// 		console.log("注册成功-",res)
-				// 	},
-				// 	fail(err) {
-				// 		console.log("注册失败-",err)
-				// 	}
-				// })
+				var myPhoneReg = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+				if(!myPhoneReg.test(this.form.account)){
+					return uni.showToast({
+						title: '手机号码无效',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				if(this.form.password != this.form.repass){
+					return uni.showToast({
+						title: '密码不一致',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				uni.request({
+				    url: '/register', 
+					method:'POST',
+					data: {
+						account:this.form.account,
+						password:this.form.password
+					},
+				    success: (res) => {
+				        console.log(res.data);
+				    },
+					fail: (err) => {
+						console.log(err.data)
+					}
+				});
 			},
 			// 跳转到登录页面
 			goToLogin(){
