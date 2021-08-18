@@ -37,6 +37,16 @@
 			},
 			// 点击注册调用方法
 			register(){
+				// 账号不能为空
+				if(!this.form.account){
+					return uni.showToast({
+						title: '账号不能为空',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				
+				// 输入正确的手机号
 				var myPhoneReg = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
 				if(!myPhoneReg.test(this.form.account)){
 					return uni.showToast({
@@ -45,6 +55,17 @@
 						duration: 2000
 					});
 				}
+				
+				// 密码不能为空
+				if(!this.form.password || !this.form.repass){
+					return uni.showToast({
+						title: '密码不能为空',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				
+				// 密码不一致
 				if(this.form.password != this.form.repass){
 					return uni.showToast({
 						title: '密码不一致',
@@ -52,6 +73,8 @@
 						duration: 2000
 					});
 				}
+				
+				// 调用接口
 				uni.request({
 				    url: '/register', 
 					method:'POST',
@@ -61,8 +84,23 @@
 					},
 				    success: (res) => {
 				        console.log(res.data);
+						uni.navigateTo({
+						    url: '/pages/login/login'
+						});
+						setTimeout(()=>{
+							uni.showToast({
+								title: '注册成功',
+								icon: 'none',
+								duration: 5000
+							});
+						})
 				    },
 					fail: (err) => {
+						uni.showToast({
+							title: '注册失败',
+							icon: 'none',
+							duration: 2000
+						});
 						console.log(err.data)
 					}
 				});
