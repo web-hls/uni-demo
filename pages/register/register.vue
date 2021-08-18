@@ -23,7 +23,6 @@
 	export default {
 		data() {
 			return {
-			  // account:'',
 			  form: {
 				account: "",
 				password: "",

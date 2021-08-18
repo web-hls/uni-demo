@@ -2,11 +2,11 @@
 	<view class="login-content">
 		<image class="cube-logo" src="https://labfile.oss.aliyuncs.com/courses/4715/1627885535(1).png"></image>
 		<view class="login-input">
-			<input class="uni-input input" focus placeholder="请输入账号" placeholder-style="color:#cccccc"/>
-			<input class="uni-input input" focus placeholder="请输入密码" password placeholder-style="color:#cccccc"/>
+			<input class="uni-input input" focus placeholder="请输入账号" v-model="form.account" placeholder-style="color:#cccccc"/>
+			<input class="uni-input input" focus placeholder="请输入密码" v-model="form.password" password placeholder-style="color:#cccccc"/>
 		</view>
 		<view class="login-button">
-			<button class="button" type="default">登录</button>
+			<button class="button" type="default" @click="login">登录</button>
 		</view>
 		
 		<view class="relevant-description">
@@ -20,10 +20,44 @@
 	export default {
 		data() {
 			return {
-				
+				form: {
+					account: "",
+					password: ""
+				},
 			}
 		},
 		methods: {
+			login(){
+				uni.request({
+				    url: '/login', 
+					method:'POST',
+					data: {
+						account:this.form.account,
+						password:this.form.password
+					},
+				    success: (res) => {
+				        console.log(res.data);
+						// uni.navigateTo({
+						//     url: '/pages/login/login'
+						// });
+						setTimeout(()=>{
+							uni.showToast({
+								title: '登录成功',
+								icon: 'none',
+								duration: 5000
+							});
+						})
+				    },
+					fail: (err) => {
+						uni.showToast({
+							title: '登录失败',
+							icon: 'none',
+							duration: 2000
+						});
+						console.log(err.data)
+					}
+				});
+			},
 			goToRegister(){
 				uni.navigateTo({
 				    url: '/pages/register/register'
