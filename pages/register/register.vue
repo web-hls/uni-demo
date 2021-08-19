@@ -20,13 +20,9 @@
 </template>
 
 <script>
-	import fetchAjax from '../../https/https.js'
-	// const { $http } = require('../../http/http.js');
-
 	export default {
 		data() {
 			return {
-			  // account:'',
 			  form: {
 				account: "",
 				password: "",
@@ -36,60 +32,77 @@
 		},
 		methods: {
 			onLoad(){
-				// console.log("this.account",this.account)
 				console.log("this.form",this.form)
 			},
 			// 点击注册调用方法
 			register(){
+				// 账号不能为空
+				if(!this.form.account){
+					return uni.showToast({
+						title: '账号不能为空',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				
+				// 输入正确的手机号
+				var myPhoneReg = /^(((13[0-9]{1})|(14[0-9]{1})|(15[0-9]{1})|(17[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+				if(!myPhoneReg.test(this.form.account)){
+					return uni.showToast({
+						title: '手机号码无效',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				
+				// 密码不能为空
+				if(!this.form.password || !this.form.repass){
+					return uni.showToast({
+						title: '密码不能为空',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				
+				// 密码不一致
+				if(this.form.password != this.form.repass){
+					return uni.showToast({
+						title: '密码不一致',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				
+				// 调用接口
 				uni.request({
-					url: '/register', 
-					data: this.form,
-					header: {
-						'custom-header': 'hello' //自定义请求头信息
+				    url: '/register', 
+					method:'POST',
+					data: {
+						account:this.form.account,
+						password:this.form.password
 					},
-					success: (res) => {
-						console.log(res.data);
-						this.text = 'request success';
-					},
+				    success: (res) => {
+				        console.log(res.data);
+						uni.navigateTo({
+						    url: '/pages/login/login'
+						});
+						setTimeout(()=>{
+							uni.showToast({
+								title: '注册成功',
+								icon: 'none',
+								duration: 5000
+							});
+						})
+				    },
 					fail: (err) => {
-						console.log(err);
+						uni.showToast({
+							title: '注册失败',
+							icon: 'none',
+							duration: 2000
+						});
+						console.log(err.data)
 					}
 				});
-				// ----------------------------------------------------
-				// let opts = {
-				// 	url: '/',
-				// 	method: 'GET'
-				// };
-				// let param = {
-				// 	deviceId: 1,
-				// 	deviceName: 2
-				// };
-				// this.$myRequest.httpTokenRequest(opts, param).then(res => {
-				// 	console.log("res.data",res.data);
-				// 	//打印请求返回的数据
-				
-				// }, error => {
-				// 	console.log(error);
-				// })
-				// ---------------------------------------------------------
-				// uni.request({
-				// 	url:"https://www.baidu.com/",
-					
-				// 	// url: 'https://121.40.227.60:7001/register',
-				// 	// url: 'https://ssh.shiyanlou.com:7001/register',
-				// 	// data: JSON.stringify(this.form),
-				// 	// data: this.form,
-				// 	method: 'get',
-				// 	// header: {
-				// 	// 	'content-type':'application/json'
-				// 	// },
-				// 	success(res) {
-				// 		console.log("注册成功-",res)
-				// 	},
-				// 	fail(err) {
-				// 		console.log("注册失败-",err)
-				// 	}
-				// })
 			},
 			// 跳转到登录页面
 			goToLogin(){
