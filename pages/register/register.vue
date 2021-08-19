@@ -41,21 +41,37 @@
 			},
 			// 点击注册调用方法
 			register(){
-				let opts = {
-					url: '/',
-					method: 'GET'
-				};
-				let param = {
-					deviceId: 1,
-					deviceName: 2
-				};
-				this.$myRequest.httpTokenRequest(opts, param).then(res => {
-					console.log("res.data",res.data);
-					//打印请求返回的数据
+				uni.request({
+					url: '/register', 
+					data: this.form,
+					header: {
+						'custom-header': 'hello' //自定义请求头信息
+					},
+					success: (res) => {
+						console.log(res.data);
+						this.text = 'request success';
+					},
+					fail: (err) => {
+						console.log(err);
+					}
+				});
+				// ----------------------------------------------------
+				// let opts = {
+				// 	url: '/',
+				// 	method: 'GET'
+				// };
+				// let param = {
+				// 	deviceId: 1,
+				// 	deviceName: 2
+				// };
+				// this.$myRequest.httpTokenRequest(opts, param).then(res => {
+				// 	console.log("res.data",res.data);
+				// 	//打印请求返回的数据
 				
-				}, error => {
-					console.log(error);
-				})
+				// }, error => {
+				// 	console.log(error);
+				// })
+				// ---------------------------------------------------------
 				// uni.request({
 				// 	url:"https://www.baidu.com/",
 					

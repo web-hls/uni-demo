@@ -71,13 +71,13 @@
 	
 	"h5" : {
 	  "devServer" : {
-	    "port" : 8080, //端口号
+	    "port" : 22, //端口号
 	     "disableHostCheck" : true,
 	     "proxy" : {
 	      "/api" : {
-	       "target" : "https://www.baidu.com/", //目标接口域名
+	       "target" : "https://ssh.shiyanlou.com/", //目标接口域名
 	        "changeOrigin" : true,  //是否跨域
-	        "secure" : false,  // 设置支持https协议的代理
+	        "secure" : true,  // 设置支持https协议的代理
 	         "pathRewrite": {"^/api": ""}  
 	     }
 	   }
