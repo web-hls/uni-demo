@@ -28,6 +28,22 @@
 		},
 		methods: {
 			login(){
+				// 账号不能为空
+				if(!this.form.account){
+					return uni.showToast({
+						title: '账号不能为空',
+						icon: 'none',
+						duration: 2000
+					});
+				}
+				// 密码不能为空
+				if(!this.form.password){
+					return uni.showToast({
+						title: '密码不能为空',
+						icon: 'none',
+						duration: 2000
+					});
+				}
 				uni.request({
 				    url: '/login', 
 					method:'POST',
@@ -36,24 +52,26 @@
 						password:this.form.password
 					},
 				    success: (res) => {
-				        console.log(res.data);
-						// uni.navigateTo({
-						//     url: '/pages/login/login'
-						// });
-						setTimeout(()=>{
+				        console.log(res);
+						console.log(res.data.code)
+						if(res.data.code == 1){
+							uni.navigateTo({
+							    url: '/pages/index/index'
+							});
 							uni.showToast({
 								title: '登录成功',
 								icon: 'none',
 								duration: 5000
 							});
-						})
+						} else {
+							uni.showToast({
+								title: '登录失败',
+								icon: 'none',
+								duration: 2000
+							});
+						}
 				    },
 					fail: (err) => {
-						uni.showToast({
-							title: '登录失败',
-							icon: 'none',
-							duration: 2000
-						});
 						console.log(err.data)
 					}
 				});
