@@ -55,19 +55,21 @@
 				        console.log(res);
 						console.log(res.data.code)
 						if(res.data.code == 1){
-							uni.navigateTo({
-							    url: '/pages/index/index'
+							uni.switchTab({
+							    url: '/pages/my/my'
 							});
-							uni.showToast({
-								title: '登录成功',
-								icon: 'none',
-								duration: 5000
-							});
+						    setTimeout(()=>{
+							  uni.showToast({
+							    title: '登录成功',
+							    icon: 'none',
+							    duration: 3000
+							 });
+						   })
 						} else {
 							uni.showToast({
 								title: '登录失败',
 								icon: 'none',
-								duration: 2000
+								duration: 3000
 							});
 						}
 				    },
