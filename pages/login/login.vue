@@ -55,6 +55,8 @@
 				        console.log(res);
 						console.log(res.data.code)
 						if(res.data.code == 1){
+							// uni-app 框架普通页面跳转 到 tabbar页面的方法
+							// 比如登录页面通过验证之后调用此方法可以跳转到带有tabbar的页面
 							uni.switchTab({
 							    url: '/pages/my/my'
 							});

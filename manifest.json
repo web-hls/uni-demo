@@ -75,7 +75,7 @@
             "disableHostCheck": true,
             "proxy": {
                 "/": {
-                    "target": "https://b901b05634a9-service.simplelab.cn/",
+                    "target": "https://7ceb8d755b66-service.simplelab.cn/",
                     "changeOrigin": true,
                     "secure": false,
 					"pathRewrite":{"^/":""}

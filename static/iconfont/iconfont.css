@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2762531 */
-  src: url('iconfont.woff2?t=1629699285305') format('woff2'),
-       url('iconfont.woff?t=1629699285305') format('woff'),
-       url('iconfont.ttf?t=1629699285305') format('truetype');
+  src: url('iconfont.woff2?t=1629737531850') format('woff2'),
+       url('iconfont.woff?t=1629737531850') format('woff'),
+       url('iconfont.ttf?t=1629737531850') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,58 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-xinxi:before {
+  content: "\e635";
+}
+
+.icon-dongtai:before {
+  content: "\e64f";
+}
+
+.icon-duihuakuang:before {
+  content: "\e62f";
+}
+
+.icon-dongtai1:before {
+  content: "\e629";
+}
+
+.icon-wj-jh:before {
+  content: "\e70e";
+}
+
+.icon-xinxi1:before {
+  content: "\e62a";
+}
+
+.icon-swticonshezhitianchong:before {
+  content: "\e7b4";
+}
+
+.icon-xinxi2:before {
+  content: "\e613";
+}
+
+.icon-dongtai2:before {
+  content: "\e605";
+}
+
+.icon-shezhi:before {
+  content: "\e611";
+}
+
+.icon-jihua:before {
+  content: "\e61f";
+}
+
+.icon-shezhi1:before {
+  content: "\e60b";
+}
+
+.icon-shezhi01:before {
+  content: "\e64b";
 }
 
 .icon-zhuanfa:before {
