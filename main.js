@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import myRequest from './https/https.js'
+import "./static/iconfont/iconfont.css"
 
 Vue.prototype.$myRequest = myRequest
 

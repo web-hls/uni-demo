@@ -37,9 +37,9 @@
 		{
 			"path": "pages/my/my",
 			"style": {
-				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": "我的",
-				"navigationBarBackgroundColor": "#2B9939"
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "个人中心",
+				"navigationBarBackgroundColor": "#f7e8d5"
 			}
 		}
 	    ,{
