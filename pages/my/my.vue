@@ -12,7 +12,7 @@
 					<view class="brief">前端工程师，蓝桥签约作者</view>
 				</view>
 			</view>
-			<view class="basic-info-right">
+			<view class="basic-info-right" @click="toEditInfo">
 				<text class="icon">&#xe612;</text>
 			</view>
     </view>
@@ -98,14 +98,11 @@
 		</view>
 		<!-- 底部过渡 -->
     <view style="margin-bottom:100rpx"></view>
-
-
-
-	<!-- <button type="primary" @click="goto('/pages/index/index')">通过方法跳转到首页</button> -->
-
-
 	</view>
 </template>
+<!--  <button type="primary" @click="goto('/pages/index/index')">
+			  通过方法跳转到首页
+		  </button> -->
 
 <script>
 	
@@ -116,6 +113,11 @@
 			}
 		},
 		methods: {
+			toEditInfo(){
+				uni.navigateTo({
+					url:'/pages/my/editInfo'
+				})
+			},
 			 goto(url) {
 				uni.switchTab({
 					url:url

@@ -41,6 +41,14 @@
 				"navigationBarTitleText": "个人中心",
 				"navigationBarBackgroundColor": "#f7e8d5"
 			}
+		},
+		{
+			"path": "pages/my/editInfo",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "编辑个人信息",
+				"navigationBarBackgroundColor": "#f7e8d5"
+			}
 		}
 	    ,{
             "path" : "pages/register/register",
