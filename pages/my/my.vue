@@ -185,7 +185,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-around;
-			font-size: 30rpx;
+			font-size: 35rpx;
 			margin-top: -15rpx;
 			.action {
 				margin-left: 20rpx;
@@ -257,13 +257,14 @@
 			}
 			.content {
 				display: flex;
+				align-items: center;
 				justify-content: space-between;
 				color: gray;
 			  margin: 12px 0px 0px 12px;
-        font-size: 19px;
+        font-size: 38rpx;
 				.iconfont {
 					margin-right: 40rpx;
-					font-size: 30px;
+					font-size: 60rpx;
 				}
 			}
 			.line {
