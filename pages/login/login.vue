@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex';
 	export default {
 		data() {
 			return {
@@ -27,6 +28,7 @@
 			}
 		},
 		methods: {
+			...mapActions(["addToken"]),
 			login(){
 				// 账号不能为空
 				if(!this.form.account){
@@ -55,11 +57,13 @@
 				    console.log(res);
 						console.log(res.data.code)
 						if(res.data.code == 1){
+							this.addToken(res.data.token)
 							// uni-app 框架普通页面跳转 到 tabbar页面的方法
 							// 比如登录页面通过验证之后调用此方法可以跳转到带有tabbar的页面
 							uni.switchTab({
 							    url: '/pages/my/my'
 							});
+							console.log(res.data)
 						    setTimeout(()=>{
 							  uni.showToast({
 							    title: '登录成功',
