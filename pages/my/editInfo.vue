@@ -87,8 +87,10 @@ export default {
       birth_day: "2000-01-17",
       brief: "前端工程师，蓝桥签约作者",
     };
-  },
-  computed: mapState(["token"]),
+	},
+	
+	computed: mapState(["token"]), // 拿值
+	
   onLoad() {
     this.getData();
   },
@@ -97,15 +99,15 @@ export default {
     getData() {
       var that = this;
       uni.request({
-                url: "/getUserInfo",
-                header: {
-                  token: this.token,
-                },
-                success: function (res) {
-                  console.log(res);
-                  that.src = res.data.img
-                },
-              });
+				url: "/getUserInfo",
+				header: {
+					token: this.token,
+				},
+				success: function (res) {
+					console.log(res);
+					that.src = res.data.img
+				},
+			});
     },
 
     addImage() {
@@ -118,7 +120,7 @@ export default {
         success: function (res) {
           const tempFilePaths = res.tempFilePaths;
           const uploadTask = uni.uploadFile({
-            url: "http://localhost:8080/uploadUser",
+            url: "https://c46ec768565a-service.simplelab.cn/uploadUser",
             filePath: tempFilePaths[0],
             name: "file",
             formData: {
@@ -128,7 +130,7 @@ export default {
               console.log(uploadFileRes);
               //获取图片信息 网站域名 + res1.data.url就是一个图片的完整路径了
               var res1 = JSON.parse(uploadFileRes.data);
-              that.src = "http://localhost:8080" + res1.url;
+              that.src = "https://c46ec768565a-service.simplelab.cn" + res1.url;
               uni.request({
                 url: "/updateUser",
                 method: "POST",
