@@ -52,7 +52,7 @@
 						password:this.form.password
 					},
 				    success: (res) => {
-				        console.log(res);
+				    console.log(res);
 						console.log(res.data.code)
 						if(res.data.code == 1){
 							// uni-app 框架普通页面跳转 到 tabbar页面的方法
