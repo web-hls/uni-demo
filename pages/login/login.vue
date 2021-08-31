@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex';
+import { mapActions } from 'vuex';
 	export default {
 		data() {
 			return {
@@ -28,7 +28,7 @@ import {mapActions} from 'vuex';
 			}
 		},
 		methods: {
-			...mapActions(["addToken"]),
+			...mapActions(["addToken"]), // 拿方法
 			login(){
 				// 账号不能为空
 				if(!this.form.account){
@@ -47,7 +47,7 @@ import {mapActions} from 'vuex';
 					});
 				}
 				uni.request({
-				    url: '/login', 
+				  url: '/login', 
 					method:'POST',
 					data: {
 						account:this.form.account,

@@ -1,5 +1,5 @@
 // router.js
-import {RouterMount,createRouter} from 'uni-simple-router';
+import { RouterMount,createRouter } from 'uni-simple-router';
 import store from '../store/index.js'
 
 const router = createRouter({

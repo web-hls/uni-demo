@@ -75,7 +75,7 @@
 				
 				// 调用接口
 				uni.request({
-				    url: '/register', 
+				  url: '/register', 
 					method:'POST',
 					data: {
 						account:this.form.account,
