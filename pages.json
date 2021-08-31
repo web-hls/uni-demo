@@ -37,6 +37,7 @@
 			}
 		},
 		{
+			"name": "my",
 			"path": "pages/my/my",
 			"style": {
 				"navigationBarTextStyle": "black",

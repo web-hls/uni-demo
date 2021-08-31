@@ -28,7 +28,7 @@ import { mapActions } from 'vuex';
 			}
 		},
 		methods: {
-			...mapActions(["addToken"]), // 拿方法
+			...mapActions(["addToken", "addUsers"]), // 拿方法
 			login(){
 				// 账号不能为空
 				if(!this.form.account){
@@ -57,13 +57,17 @@ import { mapActions } from 'vuex';
 				    console.log(res);
 						console.log(res.data.code)
 						if(res.data.code == 1){
+							// 向vuex添加token和user
 							this.addToken(res.data.token)
+							this.addUsers(res.data.userData)
+							// 向cookies 添加token和user
+							this.$cookies.set("token", res.data.token)
+							this.$cookies.set("userData" , JSON.stringify(res.data.userData))
 							// uni-app 框架普通页面跳转 到 tabbar页面的方法
 							// 比如登录页面通过验证之后调用此方法可以跳转到带有tabbar的页面
 							uni.switchTab({
 							    url: '/pages/my/my'
 							});
-							console.log(res.data)
 						    setTimeout(()=>{
 							  uni.showToast({
 							    title: '登录成功',
