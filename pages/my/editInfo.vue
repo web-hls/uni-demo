@@ -75,6 +75,7 @@
 </template>
 
 <script>
+import { baseUrl } from '../../config/env' // 引入公共配置
 import { mapState } from "vuex";
 
 export default {
@@ -89,7 +90,7 @@ export default {
     };
 	},
 	
-	computed: mapState(["token"]), // 拿值
+	computed: mapState(["token","user"]), // 拿值
 	
   onLoad() {
     this.getData();
@@ -97,17 +98,11 @@ export default {
   methods: {
 
     getData() {
-      var that = this;
-      uni.request({
-				url: "/getUserInfo",
-				header: {
-					token: this.token,
-				},
-				success: function (res) {
-					console.log(res);
-					that.src = res.data.img
-				},
-			});
+      this.src = baseUrl + this.user.img
+      this.username = this.user.nackname
+      this.sex = this.user.sex
+      this.birth_day = this.user.birth_day
+      this.brief = this.user.brief
     },
 
     addImage() {
@@ -120,7 +115,7 @@ export default {
         success: function (res) {
           const tempFilePaths = res.tempFilePaths;
           const uploadTask = uni.uploadFile({
-            url: "https://61163d7de701-service.simplelab.cn/uploadUser",
+            url: baseUrl + "/uploadUser",
             filePath: tempFilePaths[0],
             name: "file",
             formData: {
@@ -130,12 +125,12 @@ export default {
               console.log(uploadFileRes);
               //获取图片信息 网站域名 + res1.data.url就是一个图片的完整路径了
               var res1 = JSON.parse(uploadFileRes.data);
-              that.src = "https://61163d7de701-service.simplelab.cn" + res1.url;
+              that.src = baseUrl + res1.url;
               uni.request({
                 url: "/updateUser",
                 method: "POST",
                 data: {
-                  img: that.src,
+                  img: res1.url,
                 },
                 header: {
                   token: that.token,

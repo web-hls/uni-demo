@@ -6,8 +6,10 @@ import myRequest from './https/https.js'
 // 2.main.js 中使用
 
 // 自定义路由
-import { router,RouterMount } from './router/index.js'
-
+import {router,RouterMount} from './router/index.js'
+// 配置cookie
+import cookies from 'vue-cookie'
+import "./static/iconfont/iconfont.css"
 //引入vuex
 import store from './store'
 
@@ -17,7 +19,7 @@ Vue.use(router)
 //把vuex定义成全局组件
 Vue.prototype.$store = store
 Vue.prototype.$myRequest = myRequest
-
+Vue.prototype.$cookies = cookies;
 Vue.config.productionTip = false
 
 App.mpType = 'app'
