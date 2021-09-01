@@ -3,6 +3,9 @@
 		{
 			"name": "register",
 			"path": "pages/register/register",
+			"meta":{
+				"title": "注册"
+		  },
 			"style": {
 				"app-plus": {
 					"titleNView":false

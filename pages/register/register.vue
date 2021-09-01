@@ -82,7 +82,7 @@
 						password:this.form.password
 					},
 				    success: (res) => {
-				        console.log(res);
+				    console.log(res);
 						if(res.data.code == 1){
 							uni.navigateTo({
 							    url: '/pages/login/login'

@@ -2,7 +2,7 @@
 
 export default {
 
-    addToken({ commit} , token) {
+    addToken({ commit } , token) {
         commit('REMER_TOKEN', token)
     },
 

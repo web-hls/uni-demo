@@ -120,7 +120,7 @@ export default {
         success: function (res) {
           const tempFilePaths = res.tempFilePaths;
           const uploadTask = uni.uploadFile({
-            url: "https://c46ec768565a-service.simplelab.cn/uploadUser",
+            url: "https://61163d7de701-service.simplelab.cn/uploadUser",
             filePath: tempFilePaths[0],
             name: "file",
             formData: {
@@ -130,7 +130,7 @@ export default {
               console.log(uploadFileRes);
               //获取图片信息 网站域名 + res1.data.url就是一个图片的完整路径了
               var res1 = JSON.parse(uploadFileRes.data);
-              that.src = "https://c46ec768565a-service.simplelab.cn" + res1.url;
+              that.src = "https://61163d7de701-service.simplelab.cn" + res1.url;
               uni.request({
                 url: "/updateUser",
                 method: "POST",

@@ -1,4 +1,4 @@
-//vue.config.js
+// 4.vue.config.js
 const TransformPages = require('uni-read-pages')
 const {webpack} = new TransformPages()
 module.exports = {

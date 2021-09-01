@@ -1,12 +1,17 @@
 import Vue from 'vue'
 import App from './App'
 import myRequest from './https/https.js'
+
+// 1.安装 uni-simple-router
+// 2.main.js 中使用
+
 // 自定义路由
-import {router,RouterMount} from './router/index.js'
-import "./static/iconfont/iconfont.css"
+import { router,RouterMount } from './router/index.js'
+
 //引入vuex
 import store from './store'
 
+import "./static/iconfont/iconfont.css"
 Vue.use(router)
 
 //把vuex定义成全局组件
@@ -25,7 +30,10 @@ const app = new Vue({
     store,
 })
 
+//#ifdef H5
+RouterMount(app, router, '#app')
+//#endif
 
-RouterMount(app,router,'#app')
-
+//#ifndef H5
 app.$mount()
+//#endif
