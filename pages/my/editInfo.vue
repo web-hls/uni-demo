@@ -7,15 +7,6 @@
         <view class="userAvatar" @tap="addImage">
           <image :src="src" style="height: 100%; width: 100%"></image>
         </view>
-        <!-- <el-upload
-            class="avatar-uploader"
-            action="http://localhost:7001/uploadUser"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
-            <img v-if="imageUrl" :src="imageUrl" class="avatar">
-          </el-upload> -->
         <view class="iconfont">
           <text class="iconfont">&#xe616;</text>
         </view>
@@ -155,7 +146,20 @@ export default {
       });
     },
 
-    changeUserName() {},
+    changeUserName() {
+      wx.showModal({
+        title: '提示',
+        content: '这是一个模态弹窗',
+        editable: true,
+        success (res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
+    },
     changeSex() {},
     changeBirth() {},
     changeBrief() {},
