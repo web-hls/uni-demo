@@ -117,6 +117,9 @@ export default {
 	  console.log(this.user)
     if(this.user.img != "/static/default.jpg") { this.src = baseUrl + this.user.img }
   },
+  activated() {
+    if(this.user.img != "/static/default.jpg") { this.src = baseUrl + this.user.img }
+  },
   methods: {
     toEditInfo() {
       uni.navigateTo({

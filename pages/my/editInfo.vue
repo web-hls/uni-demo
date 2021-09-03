@@ -75,8 +75,8 @@
 </template>
 
 <script>
-import { baseUrl } from '../../config/env' // 引入公共配置
-import { mapState } from "vuex";
+import { baseUrl } from "../../config/env"; // 引入公共配置
+import { mapActions,mapState } from "vuex";
 
 export default {
   data() {
@@ -88,21 +88,21 @@ export default {
       birth_day: "2000-01-17",
       brief: "前端工程师，蓝桥签约作者",
     };
-	},
-	
-	computed: mapState(["token","user"]), // 拿值
-	
+  },
+
+  computed: mapState(["token", "user"]), // 拿值
+
   onLoad() {
     this.getData();
   },
   methods: {
-
+    ...mapActions(["updateUser"]), // 拿方法
     getData() {
-      this.src = baseUrl + this.user.img
-      this.username = this.user.nackname
-      this.sex = this.user.sex
-      this.birth_day = this.user.birth_day
-      this.brief = this.user.brief
+      this.src = baseUrl + this.user.img;
+      this.username = this.user.nackname;
+      this.sex = this.user.sex;
+      this.birth_day = this.user.birth_day;
+      this.brief = this.user.brief;
     },
 
     addImage() {
@@ -125,7 +125,8 @@ export default {
               console.log(uploadFileRes);
               //获取图片信息 网站域名 + res1.data.url就是一个图片的完整路径了
               var res1 = JSON.parse(uploadFileRes.data);
-              that.src = baseUrl + res1.url;
+              // that.src = baseUrl + res1.url;
+              that.src1 = res1.url
               uni.request({
                 url: "/updateUser",
                 method: "POST",
@@ -136,11 +137,15 @@ export default {
                   token: that.token,
                 },
                 success: function (res1) {
-                  console.log(res1);
+                  if(res1.data.code == 1) {
+                    that.updateUser([{name:'img', data: that.src1}])
+                    that.src = that.src1
+                    that.$cookies.set("userData" , JSON.stringify(that.user))
+                  }
                   uni.showToast({
                     title: res1.data.msg,
-                    icon: 'none',
-                    duration: 3000
+                    icon: "none",
+                    duration: 3000,
                   });
                 },
               });
