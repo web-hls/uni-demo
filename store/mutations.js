@@ -1,6 +1,7 @@
 const INITIALIZE_DATA = 'INITIALIZE_DATA'
 const REMER_TOKEN = 'REMER_TOKEN'
 const REMER_USER = 'REMER_USER'
+const UPDATEUSER = 'UPDATEUSER'
 
 export default {
 
@@ -27,4 +28,13 @@ export default {
 		},
 		state.token = '';
 	},
+
+	[UPDATEUSER](state, userData) {
+
+		for (let i = 0; i < userData.length; i++) {
+			const data = userData[i];
+			state.user[data.name] = data.data
+		}
+		console.log(state.user)
+	}
 }
