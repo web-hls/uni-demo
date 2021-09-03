@@ -1,6 +1,6 @@
 {
     "name" : "uni-demo",
-    "appid" : "",
+    "appid" : "__UNI__5A2A340",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -70,11 +70,12 @@
     },
     "h5" : {
         "devServer" : {
+			"public": "0.0.0.0",
             "port" : 80,
             "disableHostCheck" : true,
             "proxy" : {
                 "/" : {
-                    "target" : "https://136efa8fdb81-service.simplelab.cn",
+                    "target" : "https://yhf7.top:8080",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {

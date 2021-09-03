@@ -14,8 +14,8 @@
      baseUrl = '';
      baseImgPath = '/img/';
  }else{
-     baseUrl = 'https://136efa8fdb81-service.simplelab.cn';
-     baseImgPath = 'https://136efa8fdb81-service.simplelab.cn';
+     baseUrl = 'https://yhf7.top:8080';
+     baseImgPath = 'https://yhf7.top:8080';
  }
  
  export {
