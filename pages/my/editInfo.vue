@@ -25,20 +25,19 @@
     </view>
     <view class="tansition-line"></view>
     <!-- 性别 -->
-    <view class="edit-left-box" @click="changeSex">
+    <view class="edit-left-box">
       <view class="edit-left-box-text">性别</view>
-      <view class="right-value" v-if="sex == 0"
-        >男
-        <view class="iconfont">
-          <text class="iconfont">&#xe616;</text>
+      <picker
+        :value="genderInex"
+        :range="genderArray"
+        range-key="name"
+        @change="changeSex"
+      >
+        <view  class="flex">
+          <text>{{genderArray[genderInex || 0]}}</text>
+          <view class="iconfont"><text class="iconfont">&#xe616;</text></view>
         </view>
-      </view>
-      <view class="right-value" v-else
-        >女
-        <view class="iconfont">
-          <text class="iconfont">&#xe616;</text>
-        </view>
-      </view>
+      </picker>
     </view>
     <view class="tansition-line"></view>
     <!-- 出生日期 -->
@@ -62,6 +61,7 @@
         </view>
       </view>
     </view>
+    <!-- <view @click="quit">去掉token</view> -->
   </view>
 </template>
 
@@ -75,9 +75,14 @@ export default {
       src: "/static/default.jpg", // 用来在前端展示的图片，如上面图片中显示的一样
       src1: "", // 提交到后台的图片信息
       username: "阿珊~",
-      sex: 1,
+      sex: 0,
       birth_day: "2000-01-17",
       brief: "前端工程师，蓝桥签约作者",
+      genderArray: [
+        "男","女"
+      ],
+      genderInex: 0,
+      gender: '',
     };
   },
 
@@ -89,12 +94,21 @@ export default {
   methods: {
     ...mapActions(["updateUser"]), // 拿方法
     getData() {
+      console.log("this.user.sex",this.user.sex)
+      console.log("this.user.img",this.user.img)
       this.src = baseUrl + this.user.img;
       this.username = this.user.nackname;
-      this.sex = this.user.sex;
+      this.genderInex = this.user.sex;
       this.birth_day = this.user.birth_day;
       this.brief = this.user.brief;
     },
+
+    // quit(){
+    //   console.log("去掉token")
+    //   uni.navigateTo({
+    //       url: '/pages/login/login'
+    //   });
+    // },
 
     addImage() {
       var that = this;
@@ -160,7 +174,31 @@ export default {
         }
       })
     },
-    changeSex() {},
+    changeSex(e) {
+      console.log("e",e.detail.value)
+      uni.request({
+        url: '/updateUser', 
+        method:'POST',
+        data: {
+          // sex: this.sex
+          sex: e.detail.value
+        },
+        header: {
+          token: this.token,
+        },
+        success: (res) => {
+          // this.sex = this.genderArray[e.detail.value].name
+          this.genderInex = e.detail.value
+          this.sex = e.detail.value
+          this.updateUser([{name:'sex', data: e.detail.value}])
+          this.$cookies.set("userData" , JSON.stringify(this.user))
+        },
+        fail: (err) => {
+          console.log(err.data)
+        }
+      })
+      
+    },
     changeBirth() {},
     changeBrief() {},
   },
@@ -168,6 +206,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+// 原子性
+.flex {
+  display: flex;
+  align-items: center;
+}
 .content {
   height: 100%;
   background: #f7e8d5;

@@ -70,12 +70,11 @@
     },
     "h5" : {
         "devServer" : {
-			"public": "0.0.0.0",
             "port" : 80,
             "disableHostCheck" : true,
             "proxy" : {
                 "/" : {
-                    "target" : "https://yhf7.top:8080",
+                    "target" : "https://c0cefb5de133-service.simplelab.cn",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {

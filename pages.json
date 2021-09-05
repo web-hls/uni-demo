@@ -3,9 +3,6 @@
 		{
 			"name": "register",
 			"path": "pages/register/register",
-			"meta":{
-				"title": "注册"
-		  },
 			"style": {
 				"app-plus": {
 					"titleNView":false
@@ -56,24 +53,6 @@
 				"navigationBarBackgroundColor": "#f7e8d5"
 			}
 		}
-	    ,{
-            "path" : "pages/register/register",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
-            "path" : "pages/login/login",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
