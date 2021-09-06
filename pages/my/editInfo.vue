@@ -5,7 +5,7 @@
       <view class="text">头像</view>
       <view class="image">
         <view class="userAvatar" @tap="addImage">
-          <image :src="src" style="height: 100%; width: 100%"></image>
+          <image :src="img" style="height: 100%; width: 100%"></image>
         </view>
         <view class="iconfont">
           <text class="iconfont">&#xe616;</text>
@@ -28,13 +28,13 @@
     <view class="edit-left-box">
       <view class="edit-left-box-text">性别</view>
       <picker
-        :value="genderInex"
+        :value="sex"
         :range="genderArray"
         range-key="name"
         @change="changeSex"
       >
-        <view  class="flex">
-          <text>{{genderArray[genderInex || 0]}}</text>
+        <view class="flex">
+          <text>{{ genderArray[sex || 0] }}</text>
           <view class="iconfont"><text class="iconfont">&#xe616;</text></view>
         </view>
       </picker>
@@ -67,22 +67,19 @@
 
 <script>
 import { baseUrl } from "../../config/env"; // 引入公共配置
-import { mapActions,mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 
 export default {
   data() {
     return {
-      src: "/static/default.jpg", // 用来在前端展示的图片，如上面图片中显示的一样
+      img: "/static/default.jpg", // 用来在前端展示的图片，如上面图片中显示的一样
       src1: "", // 提交到后台的图片信息
       username: "阿珊~",
-      sex: 0,
       birth_day: "2000-01-17",
       brief: "前端工程师，蓝桥签约作者",
-      genderArray: [
-        "男","女"
-      ],
-      genderInex: 0,
-      gender: '',
+      genderArray: ["男", "女"],
+      sex: 0,
+      gender: "",
     };
   },
 
@@ -94,11 +91,9 @@ export default {
   methods: {
     ...mapActions(["updateUser"]), // 拿方法
     getData() {
-      console.log("this.user.sex",this.user.sex)
-      console.log("this.user.img",this.user.img)
-      this.src = baseUrl + this.user.img;
+      this.img = baseUrl + this.user.img;
       this.username = this.user.nackname;
-      this.genderInex = this.user.sex;
+      this.sex = this.user.sex;
       this.birth_day = this.user.birth_day;
       this.brief = this.user.brief;
     },
@@ -119,7 +114,7 @@ export default {
         sourceType: ["album"],
         success: function (res) {
           const tempFilePaths = res.tempFilePaths;
-          const uploadTask = uni.uploadFile({
+          uni.uploadFile({
             url: baseUrl + "/uploadUser",
             filePath: tempFilePaths[0],
             name: "file",
@@ -127,33 +122,10 @@ export default {
               user: "test",
             },
             success: function (uploadFileRes) {
-              console.log(uploadFileRes);
               //获取图片信息 网站域名 + res1.data.url就是一个图片的完整路径了
               var res1 = JSON.parse(uploadFileRes.data);
-              // that.src = baseUrl + res1.url;
-              that.src1 = res1.url
-              uni.request({
-                url: "/updateUser",
-                method: "POST",
-                data: {
-                  img: res1.url,
-                },
-                header: {
-                  token: that.token,
-                },
-                success: function (res1) {
-                  if(res1.data.code == 1) {
-                    that.updateUser([{name:'img', data: that.src1}])
-                    that.src = that.src1
-                    that.$cookies.set("userData" , JSON.stringify(that.user))
-                  }
-                  uni.showToast({
-                    title: res1.data.msg,
-                    icon: "none",
-                    duration: 3000,
-                  });
-                },
-              });
+              that.src1 = res1.url;
+              that.updateUserData("img", res1.url);
             },
           });
         },
@@ -162,45 +134,59 @@ export default {
 
     changeUserName() {
       wx.showModal({
-        title: '提示',
-        content: '这是一个模态弹窗',
+        title: "提示",
+        content: "这是一个模态弹窗",
         editable: true,
-        success (res) {
+        success(res) {
           if (res.confirm) {
-            console.log('用户点击确定')
+            console.log("用户点击确定");
           } else if (res.cancel) {
-            console.log('用户点击取消')
+            console.log("用户点击取消");
           }
-        }
-      })
+        },
+      });
     },
     changeSex(e) {
-      console.log("e",e.detail.value)
+      // 调用封装好的更新函数传入值
+      this.updateUserData("sex", e.detail.value);
+    },
+    changeBirth() {},
+    changeBrief() {},
+
+    /**
+     * 封装请求更新用户数据函数
+     * @param name string 更新数据的名称
+     * @param data any 需要更新的数据
+     */
+    updateUserData(name, data) {
+      let updateData = {};
+      updateData[name] = data;
       uni.request({
-        url: '/updateUser', 
-        method:'POST',
-        data: {
-          // sex: this.sex
-          sex: e.detail.value
+        url: "/updateUser",
+        method: "POST",
+        data: {
+          ...updateData,
         },
         header: {
           token: this.token,
         },
         success: (res) => {
-          // this.sex = this.genderArray[e.detail.value].name
-          this.genderInex = e.detail.value
-          this.sex = e.detail.value
-          this.updateUser([{name:'sex', data: e.detail.value}])
-          this.$cookies.set("userData" , JSON.stringify(this.user))
+          if (res.data.code == 1) {
+            this[name] = data;
+            this.updateUser([{ name, data }]);
+            this.$cookies.set("userData", JSON.stringify(this.user));
+          }
+          uni.showToast({
+            title: res.data.msg,
+            icon: "none",
+            duration: 3000,
+          });
         },
-        fail: (err) => {
-          console.log(err.data)
-        }
-      })
-      
+        fail: (err) => {
+          console.log(err.data);
+        },
+      });
     },
-    changeBirth() {},
-    changeBrief() {},
   },
 };
 </script>

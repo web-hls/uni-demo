@@ -4,7 +4,7 @@
     <view class="basic-info">
       <view class="basic-info-left">
         <view class="image">
-          <image class="user__avatar" :src="src"></image>
+          <image class="user__avatar" :src="img"></image>
         </view>
         <view class="nackname">
           <text class="name fw">{{ user.nackname }}</text>
@@ -109,16 +109,16 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      src: "/static/default.jpg",
+      img: "/static/default.jpg",
     };
   },
   computed: mapState(["user"]),
   onLoad() {
 	  console.log(this.user)
-    if(this.user.img != "/static/default.jpg") { this.src = baseUrl + this.user.img }
+    if(this.user.img != "/static/default.jpg") { this.img = baseUrl + this.user.img }
   },
   activated() {
-    if(this.user.img != "/static/default.jpg") { this.src = baseUrl + this.user.img }
+    if(this.user.img != "/static/default.jpg") { this.img = baseUrl + this.user.img }
   },
   methods: {
     toEditInfo() {
