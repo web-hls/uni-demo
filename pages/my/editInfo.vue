@@ -16,8 +16,11 @@
     <!-- 昵称 -->
     <view class="edit-left-box" @click="changeUserName">
       <view class="edit-left-box-text">昵称</view>
-      <view class="right-value"
-        >{{ username }}
+
+      <view class="right-value">
+        <view>
+          <input type="text" :value="username" focus placeholder="请输入昵称" class="t_r" placeholder-style="text-align:right"/>
+        </view>
         <view class="iconfont">
           <text class="iconfont">&#xe616;</text>
         </view>
@@ -35,7 +38,7 @@
       >
         <view class="flex">
           <text>{{ genderArray[sex || 0] }}</text>
-          <view class="iconfont"><text class="iconfont">&#xe616;</text></view>
+          <view class="iconfont m-r-24"><text class="iconfont">&#xe616;</text></view>
         </view>
       </picker>
     </view>
@@ -43,25 +46,41 @@
     <!-- 出生日期 -->
     <view class="edit-left-box" @click="changeBirth">
       <view class="edit-left-box-text">出生年月</view>
-      <view class="right-value"
-        >{{ birth_day }}
-        <view class="iconfont">
-          <text class="iconfont">&#xe616;</text>
-        </view>
+      <view class="flex">
+        <view class="uni-list" style="text-align: right;">
+            <view class="uni-list-cell" t_r>
+              <view class="uni-list-cell-db t_r">
+                <picker mode="date" class="t_r" :value="birth_day" :start="startDate" :end="endDate" @change="bindDateChange">
+                  <view class="uni-input t_r">{{birth_day ? birth_day : birth_day_default}}</view>
+                </picker>
+              </view>
+            </view>
+          </view>
+          <view class="right-value">
+            <view class="iconfont">
+              <text class="iconfont">&#xe616;</text>
+            </view>
+          </view>
       </view>
+ 
     </view>
     <view class="tansition-line"></view>
     <!-- 个性签名 -->
     <view class="edit-left-box" @click="changeBrief">
       <view class="edit-left-box-text">个性签名</view>
-      <view class="right-value-"
-        >{{ brief }}
+      <view class="right-value-">
+        <view>
+          <input type="text" class="t_r" focus placeholder="请输入个性签名" placeholder-style="text-align:right"/>
+        </view>
+        {{ brief }}
         <view class="iconfont">
           <text class="iconfont">&#xe616;</text>
         </view>
       </view>
     </view>
     <!-- <view @click="quit">去掉token</view> -->
+
+
   </view>
 </template>
 
@@ -69,17 +88,40 @@
 import { baseUrl } from "../../config/env"; // 引入公共配置
 import { mapActions, mapState } from "vuex";
 
+function getDate(type) {
+  const date = new Date();
+
+  let year = date.getFullYear();
+  let month = date.getMonth() + 1;
+  let day = date.getDate();
+
+  if (type === 'start') {
+    year = year - 10;
+  } else if (type === 'end') {
+    year = year + 10;
+  }
+  month = month > 9 ? month : '0' + month;;
+  day = day > 9 ? day : '0' + day;
+
+  return `${year}-${month}-${day}`;
+}
+
 export default {
   data() {
     return {
       img: "/static/default.jpg", // 用来在前端展示的图片，如上面图片中显示的一样
       src1: "", // 提交到后台的图片信息
-      username: "阿珊~",
-      birth_day: "2000-01-17",
+      username: '',
+      birth_day: getDate({
+        format: true
+      }),
+      birth_day_default:'0000-00-00',
       brief: "前端工程师，蓝桥签约作者",
       genderArray: ["男", "女"],
       sex: 0,
       gender: "",
+      startDate: getDate('start'),
+			endDate: getDate('end'),
     };
   },
 
@@ -90,6 +132,7 @@ export default {
   },
   methods: {
     ...mapActions(["updateUser"]), // 拿方法
+
     getData() {
       this.img = baseUrl + this.user.img;
       this.username = this.user.nackname;
@@ -133,24 +176,35 @@ export default {
     },
 
     changeUserName() {
-      wx.showModal({
-        title: "提示",
-        content: "这是一个模态弹窗",
-        editable: true,
-        success(res) {
-          if (res.confirm) {
-            console.log("用户点击确定");
-          } else if (res.cancel) {
-            console.log("用户点击取消");
-          }
-        },
-      });
+      // wx.showModal({
+      //   title: "提示",
+      //   content: "这是一个模态弹窗",
+      //   editable: true,
+      //   success(res) {
+      //     if (res.confirm) {
+      //       console.log("用户点击确定");
+      //     } else if (res.cancel) {
+      //       console.log("用户点击取消");
+      //     }
+      //   },
+      // });
     },
     changeSex(e) {
       // 调用封装好的更新函数传入值
       this.updateUserData("sex", e.detail.value);
     },
-    changeBirth() {},
+
+    // 改变生日
+    bindDateChange(e) {
+      console.log('picker发送选择改变，携带值为：' + e.detail.value)
+      this.birth_day = e.detail.value
+      this.updateUserData("birth_day", e.detail.value);
+    },
+    // 此方法不再需要
+    changeBirth(e) {
+      console.log("changeBirth",e)
+      // this.updateUserData("birth_day", e.detail.value);
+    },
     changeBrief() {},
 
     /**
@@ -192,10 +246,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.uni-picker-container {
+  position: fixed;
+  left: 0;
+  right: 0;
+  /* top: 0; */
+  bottom: 0;
+  box-sizing: border-box;
+  z-index: 999;
+  font-size: 16px;
+}
 // 原子性
 .flex {
   display: flex;
   align-items: center;
+}
+.t_r {
+  text-align: right;
+}
+.m-r-24 {
+  margin-right: 24rpx;
 }
 .content {
   height: 100%;
@@ -260,7 +330,7 @@ export default {
   }
 }
 .tansition-line {
-  border: 0.01rpx solid rgb(230, 229, 229);
+  border: 0.01px solid #E9E9E9;
   background: white;
 }
 .edit-left-box {

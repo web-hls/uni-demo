@@ -74,7 +74,7 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/" : {
-                    "target" : "https://yhf7.top:8080",
+                    "target" : "https://10c00b6d0fa2-service.simplelab.cn",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {
