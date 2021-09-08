@@ -52,7 +52,16 @@
 				"navigationBarTitleText": "编辑个人信息",
 				"navigationBarBackgroundColor": "#f7e8d5"
 			}
+		},
+		{
+			"path": "pages/my/set",
+			"style": {
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "设置",
+				"navigationBarBackgroundColor": "#f7e8d5"
+			}
 		}
+
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

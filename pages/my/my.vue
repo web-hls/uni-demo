@@ -90,7 +90,7 @@
         <view><text class="iconfont">&#xe616;</text></view>
       </view>
 
-      <view class="content">
+      <view class="content" @click="goToSet">
         <view>设置</view>
         <view><text class="iconfont">&#xe616;</text></view>
       </view>
@@ -131,6 +131,11 @@ export default {
         url: url,
       });
     },
+    goToSet(){
+      uni.navigateTo({
+        url:'pages/my/set'
+      })
+    }
   },
 };
 </script>
