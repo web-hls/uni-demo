@@ -51,6 +51,7 @@ export default {
       //销毁 token，跳到登录页面
       this.$cookies.delete('token')
       this.$cookies.delete('userData')
+      this.initializeData()
       uni.navigateTo({
         url:'/pages/login/login'
       })
