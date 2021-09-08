@@ -43,16 +43,14 @@ export default {
     };
   },
   
-  computed: mapState(["token", "user"]), // 拿值
+  computed: mapState(["token"]), // 拿值
 
   methods: {
+    ...mapActions(["initializeData","updateUser"]), // 拿方法
     toLogin() {
       //销毁 token，跳到登录页面
-      // localStorage.removeItem("Token");
-      // this.$router.push({
-      //   name: "login",
-      // });
-      this.$cookies.set("userData",null)
+      this.$cookies.delete('token')
+      this.$cookies.delete('userData')
       uni.navigateTo({
         url:'/pages/login/login'
       })
