@@ -14,12 +14,17 @@
     </view>
     <view class="tansition-line"></view>
     <!-- 昵称 -->
-    <view class="edit-left-box" @click="changeUserName">
+    <view class="edit-left-box">
       <view class="edit-left-box-text">昵称</view>
-
       <view class="right-value">
         <view>
-          <input type="text" :value="username" focus placeholder="请输入昵称" class="t_r" placeholder-style="text-align:right"/>
+          <input 
+            type="text" 
+            class="t_r" 
+            @blur="changeUserName" 
+            :value="username" 
+            placeholder="请输入昵称" 
+            placeholder-style="text-align:right"/>
         </view>
         <view class="iconfont">
           <text class="iconfont">&#xe616;</text>
@@ -44,7 +49,7 @@
     </view>
     <view class="tansition-line"></view>
     <!-- 出生日期 -->
-    <view class="edit-left-box" @click="changeBirth">
+    <view class="edit-left-box">
       <view class="edit-left-box-text">出生年月</view>
       <view class="flex">
         <view class="uni-list" style="text-align: right;">
@@ -62,25 +67,26 @@
             </view>
           </view>
       </view>
- 
     </view>
     <view class="tansition-line"></view>
     <!-- 个性签名 -->
-    <view class="edit-left-box" @click="changeBrief">
+    <view class="edit-left-box">
       <view class="edit-left-box-text">个性签名</view>
       <view class="right-value-">
         <view>
-          <input type="text" class="t_r" focus placeholder="请输入个性签名" placeholder-style="text-align:right"/>
+          <input 
+            type="text" 
+            class="t_r" 
+            @blur="changeBrief" 
+            :value="brief"
+            placeholder="请输入个性签名" 
+            placeholder-style="text-align:right"/>
         </view>
-        {{ brief }}
         <view class="iconfont">
           <text class="iconfont">&#xe616;</text>
         </view>
       </view>
     </view>
-    <!-- <view @click="quit">去掉token</view> -->
-
-
   </view>
 </template>
 
@@ -96,9 +102,9 @@ function getDate(type) {
   let day = date.getDate();
 
   if (type === 'start') {
-    year = year - 10;
+    year = year - 30;
   } else if (type === 'end') {
-    year = year + 10;
+    year = year + 0;
   }
   month = month > 9 ? month : '0' + month;;
   day = day > 9 ? day : '0' + day;
@@ -111,17 +117,21 @@ export default {
     return {
       img: "/static/default.jpg", // 用来在前端展示的图片，如上面图片中显示的一样
       src1: "", // 提交到后台的图片信息
+
       username: '',
+
+      brief: '',
+
       birth_day: getDate({
         format: true
       }),
       birth_day_default:'0000-00-00',
-      brief: "前端工程师，蓝桥签约作者",
+      startDate: getDate('start'),
+			endDate: getDate('end'),
+
       genderArray: ["男", "女"],
       sex: 0,
       gender: "",
-      startDate: getDate('start'),
-			endDate: getDate('end'),
     };
   },
 
@@ -140,13 +150,6 @@ export default {
       this.birth_day = this.user.birth_day;
       this.brief = this.user.brief;
     },
-
-    // quit(){
-    //   console.log("去掉token")
-    //   uni.navigateTo({
-    //       url: '/pages/login/login'
-    //   });
-    // },
 
     addImage() {
       var that = this;
@@ -175,37 +178,22 @@ export default {
       });
     },
 
-    changeUserName() {
-      // wx.showModal({
-      //   title: "提示",
-      //   content: "这是一个模态弹窗",
-      //   editable: true,
-      //   success(res) {
-      //     if (res.confirm) {
-      //       console.log("用户点击确定");
-      //     } else if (res.cancel) {
-      //       console.log("用户点击取消");
-      //     }
-      //   },
-      // });
+    changeUserName(e) {
+      if(e.detail.value){
+        this.updateUserData("nackname", e.detail.value);
+      }
     },
     changeSex(e) {
-      // 调用封装好的更新函数传入值
-      this.updateUserData("sex", e.detail.value);
+      this.updateUserData("sex", e.detail.value); // 调用封装好的更新函数传入值
     },
-
-    // 改变生日
     bindDateChange(e) {
-      console.log('picker发送选择改变，携带值为：' + e.detail.value)
-      this.birth_day = e.detail.value
-      this.updateUserData("birth_day", e.detail.value);
+      this.updateUserData("birth_day", e.detail.value); //picker发送选择改变，携带值为:e.detail.value 
     },
-    // 此方法不再需要
-    changeBirth(e) {
-      console.log("changeBirth",e)
-      // this.updateUserData("birth_day", e.detail.value);
+    changeBrief(e) {
+      if(e.detail.value){
+        this.updateUserData("brief", e.detail.value);
+      }
     },
-    changeBrief() {},
 
     /**
      * 封装请求更新用户数据函数
