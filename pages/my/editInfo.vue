@@ -21,7 +21,6 @@
           <input 
             type="text" 
             class="t_r" 
-            focus 
             @blur="changeUserName" 
             :value="username" 
             placeholder="请输入昵称" 
@@ -79,7 +78,6 @@
             type="text" 
             class="t_r" 
             @blur="changeBrief" 
-            focus 
             :value="brief"
             placeholder="请输入个性签名" 
             placeholder-style="text-align:right"/>
@@ -182,8 +180,7 @@ export default {
 
     changeUserName(e) {
       if(e.detail.value){
-        this.username = e.detail.value
-        this.updateUserData("username", e.detail.value);
+        this.updateUserData("nackname", e.detail.value);
       }
     },
     changeSex(e) {
@@ -194,7 +191,6 @@ export default {
     },
     changeBrief(e) {
       if(e.detail.value){
-        this.brief = e.detail.value
         this.updateUserData("brief", e.detail.value);
       }
     },
