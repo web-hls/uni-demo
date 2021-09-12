@@ -4,20 +4,7 @@ const REMER_USER = 'REMER_USER'
 const UPDATEUSER = 'UPDATEUSER'
 
 export default {
-
-	// 添加用户信息
-	[REMER_USER](state ,user) {
-		state.user = user
-	},
-
-	// 添加token
-    [REMER_TOKEN](state, token) {
-        state.token = token
-    },
-
-    /*
-	初始化信息，
-	 */
+	// 初始化信息
 	[INITIALIZE_DATA](state) {
 		state.user = {
 			img: "/static/default.jpg",
@@ -28,9 +15,16 @@ export default {
 		},
 		state.token = '';
 	},
-
+	// 添加token
+  [REMER_TOKEN](state, token) {
+			state.token = token
+	},
+	// 添加用户信息
+	[REMER_USER](state ,user) {
+		state.user = user
+	},
+	// 更新用户
 	[UPDATEUSER](state, userData) {
-
 		for (let i = 0; i < userData.length; i++) {
 			const data = userData[i];
 			state.user[data.name] = data.data
