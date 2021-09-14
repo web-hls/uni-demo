@@ -3,6 +3,9 @@
 		{
 			"name": "register",
 			"path": "pages/register/register",
+			"meta":{
+				"title": "注册"
+		  },
 			"style": {
 				"app-plus": {
 					"titleNView":false
@@ -23,9 +26,9 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTextStyle": "white",
-				"navigationBarTitleText": "首页",
-				"navigationBarBackgroundColor": "#2B9939"
+				"navigationBarTextStyle": "black",
+				"navigationBarTitleText": "日程计划",
+				"navigationBarBackgroundColor": "#f7e8d5"
 			}
 		},
 		{

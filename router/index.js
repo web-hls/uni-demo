@@ -1,4 +1,3 @@
-// 3.router.js
 // uni-simple-router 是 专为 uni-app 打造的路由管理器。
 // 它保留了 Vue-router 完全相似的书写风格
 

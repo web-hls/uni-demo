@@ -32,7 +32,7 @@ const app = new Vue({
     store,
 })
 
-//#ifdef H5
+//#ifdef H5 
 RouterMount(app, router, '#app')
 //#endif
 
