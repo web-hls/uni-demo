@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4408951",
+      "name": "删除",
+      "font_class": "ziyuan1",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "19233042",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "19494236",
+      "name": "删 除",
+      "font_class": "shanchu1",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
       "icon_id": "356484",
       "name": "信息",
       "font_class": "xinxi",
