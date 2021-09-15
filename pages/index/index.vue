@@ -1,17 +1,11 @@
 <template>
 	<view class="content">
-		<!-- 上 -->
-		<view class="top-box" @click="toCreateProject">
+		<view class="top-box" @click="toAddProject">
 			<view class="icon">&#xe612;</view>
 			<view>点击书写你的日程计划吧~</view>
-			<!-- <image class="image" src="/static/click.jpg"></image> -->
 		</view>
-		<!-- 中间部分 -->
-		<!-- 11 -->
-		<!-- {{ projectList }} -->
 		<view class="level-box">
 			<view class="grade">
-				<!-- 第一级别 -->
 				<view
 					class="level-one"
 					v-for="(t,i) in projectList"
@@ -21,62 +15,72 @@
 					<!-- <view class="image">
 						<view :class="t.project_icon"></view>
 					</view> -->
-					<!-- 项目名字 -->
 					<view class="text">{{t.project_name}}</view>
-					<!-- 项目计划情况 -->
 					<view class="fraction">
 						<view class="buttom">
 							<view class="price">{{t.project_plan}}</view>
 							<text class="iconfont" @click="deleteProject(i)">&#xe617;</text>
-							<!-- <i class="iconfont icon-shanchu"></i> -->
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
+		<view class="m-b-100"></view>
+	
 	</view>
 </template>
 
 <script>
+  import { mapState } from "vuex";
 	export default {
 		data() {
 			return {
 				 projectList: [],
 			}
 		},
-		onLoad() {
-			this.getList()
+
+		computed: mapState(["user"]), // 拿值
+
+		onShow(){
+      this.getList()
 		},
+
 		methods: {
 			getList() {
+				let user_id = this.user.id
 				uni.request({
 					url:'/getProjectList',
 					method:'POST',
 					data: {
-						user_id:'1465'
+						user_id
 					}
 				}).then(res=>{
-					console.log("res",res)
-					console.log("res.data",res[1].data)
-					// console.log("res.data.data",res.data.data)
+					if(res[1].data.code === "1")
 					this.projectList = res[1].data.data
 				}).catch(err=>{
 					console.log("err",err)
 				})
-				// let data = {
-				// 	user_id: this.$store.getters["user/id"],
-				// };
-				// this.$http.post("/getProjectList", data).then((res) => {
-				// 	console.log(res.data.data);
-				// 	if (res.data.code === "1") {
-				// 		// this.projectList = res.data.data.reverse();
-				// 		this.projectList = res.data.data;
-				// 	} else {
-				// 	}
-				// });
 			},
-			toCreateProject(){
-				console.log("000")
+			deleteProject(){
+				uni.showModal({
+					title: '提示',
+	        content: '确定要删除吗',
+					success: function (res) {
+            console.log(res)
+						const id = this.projectList[index].id;
+						uni.request({
+							url:'/deleteProject/' + id
+						})
+					},
+					fail: function (res) {
+						console.log(res.errMsg);
+					}
+				})
+			},
+			toAddProject(){
+				uni.navigateTo({
+					url: "/pages/index/addProject",
+				});
 			}
 		}
 	}
@@ -117,9 +121,8 @@
 		border-radius: 30rpx;
 		.level-one {
 			display: flex;
-			// height: auto;
 			height: 44px;
-			// background: white;
+			background: white;
 			border: 1rpx solid gray;
 			box-shadow: 0px 0px 0.2rem #f7e8d5;
 			align-items: center;
@@ -128,7 +131,6 @@
 			border-radius: 20rpx;
 			overflow: hidden;
 			.image {
-				// margin-left: 0.7rem;
 				color: orange;
 			}
 			.text {
@@ -137,17 +139,14 @@
 				overflow: hidden;
 				text-overflow: ellipsis;
 				white-space: nowrap;
-				margin-left: 0.4rem;
+				// margin-left: 0.4rem;
 				font-weight: bold;
 			}
 			.fraction {
-				// margin-right: 1rem;
-				// border-radius: 0.5rem;
-				// padding: 0.4rem 1rem;
 				.buttom {
 					display: flex;
 					align-items: center;
-					text-align: center;
+					// text-align: center;
 					justify-content: space-between;
 					width: 10rem;
 					.iconfont {
@@ -159,6 +158,9 @@
 			}
 		}
 	}
+}
+.m-b-100 {
+	margin-bottom:100rpx;
 }
 	
 </style>

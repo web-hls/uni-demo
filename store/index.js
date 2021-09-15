@@ -9,6 +9,7 @@ Vue.use(Vuex)
 
 const state = {
     user: {
+        id: 1,
         img: "/static/default.jpg",
         sex: 1,
         nackname: "阿珊~",

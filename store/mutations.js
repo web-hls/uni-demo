@@ -7,6 +7,7 @@ export default {
 	// 初始化信息
 	[INITIALIZE_DATA](state) {
 		state.user = {
+			id: 1,
 			img: "/static/default.jpg",
 			sex: 1,
 			nackname: "阿珊~",
