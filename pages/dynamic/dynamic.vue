@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view @click="goToPublishDynamic">
 		动态页面
 	</view>
 </template>
@@ -12,11 +12,15 @@
 			}
 		},
 		methods: {
-			
+			goToPublishDynamic(){
+				uni.navigateTo({
+					url: "/pages/dynamic/publishDynamic",
+				});
+			}
 		}
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>

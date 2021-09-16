@@ -9,7 +9,7 @@
               <view class="title">当前选择:</view>
               <view class="uni-list-cell-db">
                   <picker @change="bindPickerChange" :value="index" :range="array">
-                      <view class="uni-input-picker">{{array[index]}}</view>
+                      <view class="uni-input-picker">{{ project_plan }}</view>
                   </picker>
               </view>
           </view>
@@ -40,7 +40,6 @@
     methods: {
       bindPickerChange(e) {
         this.project_plan  = this.array[e.target.value]
-        console.log("this.array[e.target.value]",this.array[e.target.value])
       },
       submit(){
         let data = {
@@ -56,7 +55,7 @@
           });
         }
         uni.request({
-          url:'saveProject',
+          url:'/saveProject',
           method:'POST',
           data,
         }).then(res=>{

@@ -5,16 +5,12 @@
 			<view>点击书写你的日程计划吧~</view>
 		</view>
 		<view class="level-box">
-			<view class="grade">
+			<view class="grade" v-if="projectList">
 				<view
 					class="level-one"
 					v-for="(t,i) in projectList"
 					:key="i"
 				>
-					<!-- 图标 -->
-					<!-- <view class="image">
-						<view :class="t.project_icon"></view>
-					</view> -->
 					<view class="text">{{t.project_name}}</view>
 					<view class="fraction">
 						<view class="buttom">
@@ -26,64 +22,78 @@
 			</view>
 		</view>
 		<view class="m-b-100"></view>
-	
 	</view>
 </template>
 
 <script>
-  import { mapState } from "vuex";
-	export default {
-		data() {
-			return {
-				 projectList: [],
-			}
+import { mapState } from "vuex";
+export default {
+	data() {
+		return {
+				projectList: [],
+		}
+	},
+
+	computed: mapState(["user"]), // 拿值
+
+	onShow(){
+		this.getList()
+	},
+
+	methods: {
+		getList() {
+			let user_id = this.user.id
+			uni.request({
+				url:'/getProjectList',
+				method:'POST',
+				data: {
+					user_id
+				}
+			}).then(res=>{
+				if(res[1].data.code === "1")
+				this.projectList = res[1].data.data
+			}).catch(err=>{
+				console.log("err",err)
+			})
 		},
-
-		computed: mapState(["user"]), // 拿值
-
-		onShow(){
-      this.getList()
-		},
-
-		methods: {
-			getList() {
-				let user_id = this.user.id
-				uni.request({
-					url:'/getProjectList',
-					method:'POST',
-					data: {
-						user_id
-					}
-				}).then(res=>{
-					if(res[1].data.code === "1")
-					this.projectList = res[1].data.data
-				}).catch(err=>{
-					console.log("err",err)
-				})
-			},
-			deleteProject(){
-				uni.showModal({
-					title: '提示',
-	        content: '确定要删除吗',
-					success: function (res) {
-            console.log(res)
-						const id = this.projectList[index].id;
+		deleteProject(index){
+			var that = this
+			uni.showModal({
+				// title: '提示',//提示标题
+				content: '是否删除该计划?',//提示内容
+				cancelText: "取消", // 取消按钮的文字  
+				confirmText: "删除", // 确认按钮文字  
+				confirmColor:'#F54E40',//删除字体的颜色
+				cancelColor:'#000',//取消字体的颜色
+				success: function (res) {
+					if(res.confirm){
+						const id = that.projectList[index].id;
 						uni.request({
-							url:'/deleteProject/' + id
+							url:'/deleteProject/' + id,
+							methods: 'GET',
+						}).then(res=>{
+							console.log(res)
+							uni.showToast({
+								title: '删除成功',
+								icon: 'none',
+								duration: 5000
+							});
+							that.getList()
 						})
-					},
-					fail: function (res) {
-						console.log(res.errMsg);
 					}
-				})
-			},
-			toAddProject(){
-				uni.navigateTo({
-					url: "/pages/index/addProject",
-				});
-			}
+				},
+				fail: function (res) {
+					console.log(res.errMsg);
+				}
+			})
+		},
+		toAddProject(){
+			uni.navigateTo({
+				url: "/pages/index/addProject",
+			});
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>
@@ -162,5 +172,4 @@
 .m-b-100 {
 	margin-bottom:100rpx;
 }
-	
 </style>
