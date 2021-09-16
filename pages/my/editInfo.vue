@@ -287,7 +287,6 @@ export default {
       height: 128rpx;
       border-radius: 80rpx;
       margin: 20rpx;
-      // background: #f7e8d5;
       > image {
         border-radius: 80rpx;
       }
