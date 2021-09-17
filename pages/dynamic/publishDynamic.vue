@@ -66,7 +66,7 @@ export default {
               //获取图片信息 网站域名 + res1.data.url就是一个图片的完整路径了
               var res1 = JSON.parse(uploadFileRes.data);
               that.src1 = res1.url;
-              that.imgData.push(baseUrl+res1.url)
+              that.imgData.push(res1.url)
               // that.updateUserData("img", res1.url);
             },
           });
