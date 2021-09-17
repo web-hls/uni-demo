@@ -11,9 +11,11 @@
           placeholder="这一刻的想法..."
           auto-height />
         <view style="opacity:0">1</view>
-
-        <view class="showImage">
-            <image class="showImage" v-for="(item,i) in imgData" :src="item" style="height: 100%; width: 100%"></image>
+        
+        <view id="imgs">
+          <view class="showImage" v-for="(item,i) in imgData" :key="i">
+            <img class="showEveryImage" :src="item" style="height: 100%; width: 100%">
+          </view>
         </view>
 
         <view v-if="imgData.length<9" class="uploadsImage" @tap="addImage">
@@ -154,11 +156,71 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .uni-image >img {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    display: block;
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+	#imgs {
+		// display: grid;//使用栅格更方便适配图片数量
+		// grid-template-columns: repeat(3, 1fr);
+		// margin: auto;
+		// background: white;
+    // text-align: center;
+    display: grid;//使用栅格更方便适配图片数量
+		grid-template-columns: repeat(3, 1fr);
+		margin: auto;
+		// background: white;
+		text-align: center;
+    // display: flex;	
+		// padding-left: 8rpx;
+    // padding-bottom: 10rpx;
+    // padding: 5rpx;
+		flex-wrap:wrap;
 
-.showImage {
-  width: 30px;
-  height: 30px;
-}
+  }
+  .imgSiae {
+		width: 30vw;
+		height: 30vw;
+		// overflow: hidden;
+		// flex-wrap:wrap;
+		// padding: 3px; //这里使用padding，没有在父级使用grid-gap，因为编译器说过时了
+		//下面是让padding去挤压内容，不撑大容器
+		// -moz-box-sizing: border-box; /*Firefox3.5+*/
+		// -webkit-box-sizing: border-box; /*Safari3.2+*/
+		// -o-box-sizing: border-box; /*Opera9.6*/
+		// -ms-box-sizing: border-box; /*IE8*/
+		// box-sizing: border-box;
+		}
+
+  .showEveryImage {
+    // padding: 5rpx;
+    >img {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      display: block;
+      
+      /* position: absolute; */
+      top: 0;
+      left: 0;
+      opacity: 0;
+    }
+    // display: flex;
+    // flex-wrap:wrap;
+    // width: 100%;
+    // height: 100%;
+    // object-fit: cover;
+    // width: 30vw;
+    // height: 30vw;
+    // overflow: hidden;
+    // flex-wrap:wrap;
+  }
 
 .publish-dynamic-box {
   height: 100%;
@@ -185,7 +247,7 @@ export default {
   .publish-content {
     margin: 40rpx 24rpx;
     padding: 20rpx 10rpx 10rpx 10rpx; 
-    height: 550rpx;
+    // height: 550rpx;
     .content {
       text-indent:1em; // 首行缩进
       text-align: justify; // 两端对齐

@@ -3,7 +3,7 @@
 		<view class="go-to-publish-dynamic" @click="goToPublishDynamic">
 			<text class="icon">&#xe623;</text>
 		</view>
-		<view class="every_item_dynamic" v-for="(a,i) in dynamicList"	:key="i">
+		<view class="every_item_dynamic" v-for="(a,index) in dynamicList"	:key="index">
 			<view class="dynamic-basic-info">
 				<!-- 头像 -->
 				<view class="image">
@@ -19,11 +19,17 @@
 			<view class="text_and_pictrue">
 				<view class="brief">{{a.content}}</view>
 				<view id="imgs">
-					<view class="imgSiae" v-for="(item,index) in a.img">
-						<img :src="`${baseImgPath}${item}`"alt="">
+					<view class="imgSiae" v-for="(item,index) in a.img" :key="index">
+						<img :src="`${baseImgPath}${item}`" alt="">
 					</view>
 				</view>
 			</view>
+			<!-- 点赞-评论-删除 -->
+			<div class="bottom-share-comment-like">
+				<div><text class="iconfont">&#xe61e;</text>点赞</div>
+				<div><text class="iconfont">&#xe9b1;</text>评论</div>
+				<div @click="deleteDynamic(index)"><text class="iconfont">&#xe617;</text>删除</div>
+			</div>
 
     </view>
 		<view style="margin-bottom:220rpx"></view>
@@ -58,6 +64,7 @@
 		},
 
 		methods: {
+			// 获取动态列表
 			getList(){
 				uni.request({
 					url:"/getDynamicList",
@@ -72,6 +79,35 @@
 					}
 				})
 			},
+			// 删除动态
+			deleteDynamic(index){
+				var that = this
+				uni.showModal({
+					content: '是否删除该动态?',//提示内容
+					cancelText: "取消", // 取消按钮的文字  
+					confirmText: "删除", // 确认按钮文字  
+					confirmColor:'#F54E40',//删除字体的颜色
+					cancelColor:'#000',//取消字体的颜色
+					success: function(res) {
+						if(res.confirm) {
+							const id = that.dynamicList[index].id;
+							uni.request({
+								url:'/deleteDynamic/' + id,
+								methods: 'GET',
+							}).then(res=>{
+								console.log(res)
+								uni.showToast({
+									title: '删除成功',
+									icon: 'none',
+									duration: 5000
+								});
+								that.getList()
+							})
+						}
+					}
+				})
+			},
+			// 去发动态
 			goToPublishDynamic(){
 				uni.navigateTo({
 					url: "/pages/dynamic/publishDynamic",
@@ -163,13 +199,13 @@
 		-ms-box-sizing: border-box; /*IE8*/
 		box-sizing: border-box;
 		}
-		img {
-			display: flex;
-			flex-wrap:wrap;
-			width: 100%;
-			height: 100%;
-			object-fit: cover; //这里图片宽高都是100%，再加上object-fit属性目的是为了让不同宽高比的图片把外面的框都填满，类似放缩略图，点击查看全图得另外写
-		}
+		// img {
+		// 	display: flex;
+		// 	flex-wrap:wrap;
+		// 	width: 100%;
+		// 	height: 100%;
+		// 	object-fit: cover; //这里图片宽高都是100%，再加上object-fit属性目的是为了让不同宽高比的图片把外面的框都填满，类似放缩略图，点击查看全图得另外写
+		// }
 		.brief {
 			text-indent:1em; // 首行缩进
       text-align: justify; // 两端对齐
@@ -186,5 +222,17 @@
 			text-align: center;
 			border-radius: 20rpx;
 		}
+		.bottom-share-comment-like {
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			background: white;
+			font-size: 1rem;
+			padding: 0.5rem 0;
+			.iconfont {
+				margin-right: 0.2rem;
+				font-size: 1.3rem;
+			}
+    }
 }
 </style>
