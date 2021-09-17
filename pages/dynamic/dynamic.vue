@@ -22,8 +22,8 @@
 			<view class="middle">
 				<view class="brief">{{a.content}}</view>
 				<img
-				  v-for="(item,i) in a.img"
-					:src="item"
+					v-for="(item,index) in a.img"
+					:src="`${baseImgPath}${item}`"
 					alt=""
 				>
 			</view>
@@ -33,11 +33,13 @@
 </template>
 
 <script>
+	import { baseUrl,baseImgPath } from "../../config/env"; // 引入公共配置
   import { mapState } from "vuex";
 	export default {
 		data() {
 			return {
 				id:'',
+				baseImgPath,
 				username: '', // 昵称
 				imageUrl:'',  // 头像
 				dynamicList: [],
