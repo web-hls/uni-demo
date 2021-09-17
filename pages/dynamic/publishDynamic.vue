@@ -100,8 +100,8 @@ export default {
                duration: 3000,
             });
             uni.navigateTo({
-					url: "/pages/dynamic/dynamic",
-				});
+              url: "/pages/dynamic/dynamic",
+            });
          } else {
             uni.showToast({
                title: "动态发布失败",

@@ -1,34 +1,32 @@
 <template>
   <view class="publish-dynamic">
 		<view class="go-to-publish-dynamic" @click="goToPublishDynamic">
-			+
+			<text class="icon">&#xe623;</text>
 		</view>
-		<view
-			v-for="(a,i) in dynamicList"
-			:key="i"
-		>
-			<view class="dynamic-content">
+		<view class="every_item_dynamic" v-for="(a,i) in dynamicList"	:key="i">
+			<view class="dynamic-basic-info">
+				<!-- 头像 -->
 				<view class="image">
-					<image
-						v-if="imageUrl"
-						:src="imageUrl"
-					>
+					<image v-if="imageUrl" :src="imageUrl">
 				</view>
+				<!-- 昵称和创建时间 -->
 				<view class="text-right">
 					<view class="name">{{username}}</view>
 					<view class="public-time">{{a.create_time}}</view>
 				</view>
 			</view>
-			<view class="middle">
+			<!-- 发布的内容：文字/图片 -->
+			<view class="text_and_pictrue">
 				<view class="brief">{{a.content}}</view>
-				<img
-					v-for="(item,index) in a.img"
-					:src="`${baseImgPath}${item}`"
-					alt=""
-				>
+				<view id="imgs">
+					<view class="imgSiae" v-for="(item,index) in a.img">
+						<img :src="`${baseImgPath}${item}`"alt="">
+					</view>
+				</view>
 			</view>
+
     </view>
-		<view style="margin-bottom:3rem"></view>
+		<view style="margin-bottom:220rpx"></view>
 	</view>
 </template>
 
@@ -52,7 +50,7 @@
 		},
 		computed: mapState(["user"]), // 拿值
 
-		onLoad(){
+		onShow(){
 			this.id = this.user.id,
 			this.imageUrl = this.user.img,
 			this.username = this.user.nackname,
@@ -70,7 +68,7 @@
 				}).then(res=>{
 					console.log(res)
 					if(res[1].data.code ==1){
-						this.dynamicList = res[1].data.data
+						this.dynamicList = res[1].data.data.reverse();
 					}
 				})
 			},
@@ -85,18 +83,37 @@
 
 <style lang="scss" scoped>
 .publish-dynamic {
-
+	height: 100%;
+	background: #f7e8d5;
+	position: fixed;
+	overflow-y: scroll;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin-top: 44px;
+  // 去发布动态
 	.go-to-publish-dynamic {
-		position: fixed;
-		right: 0;
-		background: antiquewhite;
-		margin: 5rpx 30rpx;
-		padding: 0 20rpx;
-		border-radius: 20rpx;
-		font-size: 66rpx;
+		.icon {
+			position: fixed;
+			right: 0;
+			background: #f7e8d5;
+			margin: 30rpx;
+			padding: 20rpx;
+			border-radius: 50%;
+			font-size: 66rpx;
+			z-index: 999;
+			color: black;
+		}
 	}
-
-	.dynamic-content {
+	// 每一项动态
+	.every_item_dynamic {
+		border: 1rpx solid #dad1d1;
+		margin: 24rpx;
+		border-radius: 10rpx;
+	}
+  // 动态基础信息，昵称和名字
+	.dynamic-basic-info {
 		display: flex;
 		align-items: center;
 		justify-content: left;
@@ -104,37 +121,70 @@
 		.image {
 			margin: 20rpx;
 			> image {
-				width: 68rpx;
-				height: 68rpx;
-				border-radius: 20rpx;
+			  width: 120rpx;
+        height: 120rpx;
+        border-radius: 50%;
 				margin: 15rpx;
 			}
 		}
 		.text-right {
-			// margin-left: 0.4rem;
 			.name {
 				font-size: 1rem;
 				font-weight: bold;
 			}
 		}
 	}
-	.middle {
+	// 动态内容：文字和图片
+	.text_and_pictrue{
+    background: #ffffff;
+	}
+	#imgs {
+		display: grid;//使用栅格更方便适配图片数量
+		grid-template-columns: repeat(3, 1fr);
+		margin: auto;
 		background: white;
 		text-align: center;
+		display: flex;	
+		padding-left: 8rpx;
+		padding-bottom: 10rpx;
+		flex-wrap:wrap;
+
+	}
+	.imgSiae {
+		width: 30vw;
+		height: 30vw;
+		overflow: hidden;
+		flex-wrap:wrap;
+		padding: 3px; //这里使用padding，没有在父级使用grid-gap，因为编译器说过时了
+		//下面是让padding去挤压内容，不撑大容器
+		-moz-box-sizing: border-box; /*Firefox3.5+*/
+		-webkit-box-sizing: border-box; /*Safari3.2+*/
+		-o-box-sizing: border-box; /*Opera9.6*/
+		-ms-box-sizing: border-box; /*IE8*/
+		box-sizing: border-box;
+		}
+		img {
+			display: flex;
+			flex-wrap:wrap;
+			width: 100%;
+			height: 100%;
+			object-fit: cover; //这里图片宽高都是100%，再加上object-fit属性目的是为了让不同宽高比的图片把外面的框都填满，类似放缩略图，点击查看全图得另外写
+		}
 		.brief {
-			margin-left: 2.2rem;
-			font-size: 1.1rem;
-			font-weight: 450;
-			width: 85%;
-			margin-bottom: 0.4rem;
+			text-indent:1em; // 首行缩进
+      text-align: justify; // 两端对齐
+			margin-left: 20rpx;
+			font-size: 36rpx;
+			font-weight: 500;
 			text-align: justify;
+			padding-bottom: 20rpx;
+			margin-right: 20rpx;
+			letter-spacing:2px; // letter-spacing 属性增加或减少字符间的空白（字符间距）。
 		}
 		> img {
 			width: 80%;
-			height: 20rem;
 			text-align: center;
-			border-radius: 0.8rem;
+			border-radius: 20rpx;
 		}
-	}
 }
 </style>
