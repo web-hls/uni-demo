@@ -5,33 +5,15 @@
       </view>
       <view class="publish-content">
         <textarea 
-          class="textarea"
+          @blur="bindTextAreaBlur" 
+          class="content" 
           placeholder="这一刻的想法..."
-          v-model="content"
-          maxlength	= "80"
-        />
+          auto-height />
         <view style="opacity:0">1</view>
         <view class="uploadsImage" @tap="addImage">
           <image v-if="image" :src="image" style="height: 100%; width: 100%"></image>
           <text v-else class="iconfont">&#xe623;</text>
         </view>
-        <!-- <el-upload
-          class="pictrue-uploader"
-          a ction="http://123.57.158.140:7001/uploadUser"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <i
-            v-if="image"
-            :src="image"
-            class="avatar"
-          >
-          <i
-            v-else
-            class="el-icon-plus pictrue-uploader-icon"
-          ></i>
-        </el-upload> -->
       </view>
     </view>
 </template>
@@ -55,8 +37,6 @@ export default {
 
   onLoad(){
     this.id = this.user.id
-    console.log("this.id",this.id)
-    console.log("this.user.id",this.user.id)
   },
   methods: {
     ...mapActions(["updateUser"]), // 拿方法
@@ -88,53 +68,40 @@ export default {
       });
     },
     publishDynamic(){
-      // if (this.content == "") {
-      //   Toast({
-      //     message: "请输入这一刻的想法...",
-      //     position: "middle",
-      //     duration: 3000,
-      //   });
-      //   return;
-      // }
-      // this.$http({
-      //   url: "/savePublish", // 请求地址
-      //   method: "post", // 设置请求方式
-      //   data: {
-      //     user_id: this.$store.getters["user/id"],
-      //     img: this.image,
-      //     content: this.content,
-      //   },
-      // })
-      //   .then((e) => {
-      //     // 处理请求返回的结果
-      //     console.log(e.data);
-      //     Indicator.close();
-      //     if (e.data.code === "1") {
-      //       console.log(this.image);
-      //       Toast({
-      //         message: "动态发布成功",
-      //         position: "middle",
-      //         duration: 3000,
-      //       });
-      //       this.$router.push({
-      //         name: "dynamic",
-      //       });
-      //     } else {
-      //       Toast({
-      //         message: "动态发布失败",
-      //         position: "middle",
-      //         duration: 3000,
-      //       });
-      //     }
-      //   })
-      //   .catch((res) => {
-      //     Indicator.close();
-      //     Toast({
-      //       message: "发布失败",
-      //       position: "middle",
-      //       duration: 3000,
-      //     });
-      //   });
+      if (this.content == "") {
+         return uni.showToast({
+            title: "请输入内容",
+            icon: "none",
+            duration: 3000,
+         });
+      }
+      uni.request({
+        url: "/savePublish",
+        method: "POST",
+        data: {
+          user_id: this.id,
+          img: this.image,
+          content: this.content,
+        },
+      }).then(res=>{
+         console.log(res)
+         if (res.data.code === "1"){
+            uni.showToast({
+               title: "动态发布成功",
+               duration: 3000,
+            });
+            uni.navigateTo({
+					url: "/pages/dynamic/dynamic",
+				});
+         } else {
+            uni.showToast({
+               title: "动态发布失败",
+               duration: 3000,
+            });
+         }
+      }).catch(err=>{
+         console.log(err)
+      })
     },
     
     /**
@@ -200,22 +167,16 @@ export default {
     }
   }
   .publish-content {
-    margin: 40rpx 0rpx;
-    height: 300rpx;
-    .textarea {
-      margin: 10rpx 20rpx;
-      margin-top: 40rpx;
-      padding: 10rpx 6rpx;
-      text-indent:1em;
-      height: 300rpx;
-      background: white;
-      text-align: justify;
-      opacity: 0.8;
+    margin: 40rpx 24rpx;
+    padding: 20rpx 10rpx 10rpx 10rpx; 
+    height: 550rpx;
+    .content {
+      text-indent:1em; // 首行缩进
+      text-align: justify; // 两端对齐
     }
   }
   .uploadsImage {
-    // width: 228rpx;
-    // height: 228rpx;
+    margin: 10rpx 0rpx;
     margin: 40rpx 20rpx;
     margin-bottom: 50rpx;
     > image {
