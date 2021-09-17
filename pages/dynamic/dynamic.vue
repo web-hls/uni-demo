@@ -36,6 +36,7 @@
 	export default {
 		data() {
 			return {
+				id:'',
 				username: '', // 昵称
 				imageUrl:'',  // 头像
 				dynamicList: [],
@@ -49,8 +50,9 @@
 		computed: mapState(["user"]), // 拿值
 
 		onLoad(){
-			this.username = this.user.nackname,
+			this.id = this.user.id,
 			this.imageUrl = this.user.img,
+			this.username = this.user.nackname,
 			this.getList()
 		},
 
@@ -60,15 +62,12 @@
 					url:"/getDynamicList",
 					method: "POST",
 					data: {
-						user_id: this.user.id
+						user_id: this.id
 					}
 				}).then(res=>{
 					console.log(res)
-					console.log(res[0])
-					console.log(res[0].data)
-					console.log(res[0].data.data)
 					if(res[1].data.code ==1){
-						this.dynamicList = res[0].data.data
+						this.dynamicList = res[1].data.data
 					}
 				})
 			},
@@ -88,12 +87,12 @@
   justify-content: left;
   background: white;
   .image {
-    margin: 0.5rem 0.8rem;
-    > img {
-      width: 3.5rem;
-      height: 3.5rem;
-      border-radius: 2.25rem;
-      margin: 0.2rem;
+    margin: 20rpx;
+    > image {
+      width: 68rpx;
+      height: 68rpx;
+      border-radius: 20rpx;
+      margin: 15rpx;
     }
   }
   .text-right {
