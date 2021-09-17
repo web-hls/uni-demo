@@ -1,7 +1,7 @@
 <template>
-  <view>
-		<view @click="goToPublishDynamic">
-			动态页面
+  <view class="publish-dynamic">
+		<view class="go-to-publish-dynamic" @click="goToPublishDynamic">
+			+
 		</view>
 		<view
 			v-for="(a,i) in dynamicList"
@@ -22,7 +22,8 @@
 			<view class="middle">
 				<view class="brief">{{a.content}}</view>
 				<img
-					:src="a.img"
+				  v-for="(item,i) in a.img"
+					:src="item"
 					alt=""
 				>
 			</view>
@@ -81,44 +82,57 @@
 </script>
 
 <style lang="scss" scoped>
-.dynamic-content {
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  background: white;
-  .image {
-    margin: 20rpx;
-    > image {
-      width: 68rpx;
-      height: 68rpx;
-      border-radius: 20rpx;
-      margin: 15rpx;
-    }
-  }
-  .text-right {
-    // margin-left: 0.4rem;
-    .name {
-      font-size: 1rem;
-      font-weight: bold;
-    }
-  }
-}
-.middle {
-  background: white;
-  text-align: center;
-  .brief {
-    margin-left: 2.2rem;
-    font-size: 1.1rem;
-    font-weight: 450;
-    width: 85%;
-    margin-bottom: 0.4rem;
-    text-align: justify;
-  }
-  > img {
-    width: 80%;
-    height: 20rem;
-    text-align: center;
-    border-radius: 0.8rem;
-  }
+.publish-dynamic {
+
+	.go-to-publish-dynamic {
+		position: fixed;
+		right: 0;
+		background: antiquewhite;
+		margin: 5rpx 30rpx;
+		padding: 0 20rpx;
+		border-radius: 20rpx;
+		font-size: 66rpx;
+	}
+
+	.dynamic-content {
+		display: flex;
+		align-items: center;
+		justify-content: left;
+		background: white;
+		.image {
+			margin: 20rpx;
+			> image {
+				width: 68rpx;
+				height: 68rpx;
+				border-radius: 20rpx;
+				margin: 15rpx;
+			}
+		}
+		.text-right {
+			// margin-left: 0.4rem;
+			.name {
+				font-size: 1rem;
+				font-weight: bold;
+			}
+		}
+	}
+	.middle {
+		background: white;
+		text-align: center;
+		.brief {
+			margin-left: 2.2rem;
+			font-size: 1.1rem;
+			font-weight: 450;
+			width: 85%;
+			margin-bottom: 0.4rem;
+			text-align: justify;
+		}
+		> img {
+			width: 80%;
+			height: 20rem;
+			text-align: center;
+			border-radius: 0.8rem;
+		}
+	}
 }
 </style>
