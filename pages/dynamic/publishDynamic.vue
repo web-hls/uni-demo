@@ -7,6 +7,7 @@
         <textarea 
           @blur="bindTextAreaBlur" 
           class="content" 
+          v-model="content"
           placeholder="这一刻的想法..."
           auto-height />
         <view style="opacity:0">1</view>
@@ -25,12 +26,11 @@ import { mapActions,mapState } from "vuex";
 export default {
   data() {
     return {
-        id: "",
-        icon:'&#xe609;',
-        image: "",
-        content: "",
-        img: "/static/default.jpg", // 用来在前端展示的图片，如上面图片中显示的一样
-        src1: "", // 提交到后台的图片信息
+      id: "",
+      image: "",
+      content: "",
+      img: "/static/default.jpg", // 用来在前端展示的图片，如上面图片中显示的一样
+      src1: "", // 提交到后台的图片信息
     }
   },
   computed: mapState(["token", "user"]), // 拿值
@@ -67,8 +67,11 @@ export default {
         },
       });
     },
+    bindTextAreaBlur(e){
+       console.log(e.detail.value)
+    },
     publishDynamic(){
-      if (this.content == "") {
+      if (!this.content) {
          return uni.showToast({
             title: "请输入内容",
             icon: "none",
@@ -76,7 +79,7 @@ export default {
          });
       }
       uni.request({
-        url: "/savePublish",
+        url: "/saveDynamic",
         method: "POST",
         data: {
           user_id: this.id,
@@ -85,7 +88,7 @@ export default {
         },
       }).then(res=>{
          console.log(res)
-         if (res.data.code === "1"){
+         if (res[1].data.code === "1"){
             uni.showToast({
                title: "动态发布成功",
                duration: 3000,
@@ -96,6 +99,7 @@ export default {
          } else {
             uni.showToast({
                title: "动态发布失败",
+               icon: 'none',
                duration: 3000,
             });
          }
