@@ -11,7 +11,12 @@
           placeholder="这一刻的想法..."
           auto-height />
         <view style="opacity:0">1</view>
-        <view class="uploadsImage" @tap="addImage">
+
+        <view class="showImage">
+            <image class="showImage" v-for="(item,i) in imgData" :src="item" style="height: 100%; width: 100%"></image>
+        </view>
+
+        <view v-if="imgData.length<9" class="uploadsImage" @tap="addImage">
           <image v-if="image" :src="image" style="height: 100%; width: 100%"></image>
           <text v-else class="iconfont">&#xe623;</text>
         </view>
@@ -28,6 +33,7 @@ export default {
       id: "",
       image: "",
       content: "",
+      imgData: [],
       img: "/static/default.jpg", // 用来在前端展示的图片，如上面图片中显示的一样
       src1: "", // 提交到后台的图片信息
     }
@@ -60,7 +66,8 @@ export default {
               //获取图片信息 网站域名 + res1.data.url就是一个图片的完整路径了
               var res1 = JSON.parse(uploadFileRes.data);
               that.src1 = res1.url;
-              that.updateUserData("img", res1.url);
+              that.imgData.push(baseUrl+res1.url)
+              // that.updateUserData("img", res1.url);
             },
           });
         },
@@ -82,7 +89,7 @@ export default {
         method: "POST",
         data: {
           user_id: this.id,
-          img: this.image,
+          img: this.imgData.toString(),
           content: this.content,
         },
       }).then(res=>{
@@ -147,6 +154,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.showImage {
+  width: 30px;
+  height: 30px;
+}
+
 .publish-dynamic-box {
   height: 100%;
   background: #f7e8d5;
