@@ -21,7 +21,6 @@
 
 <script>
 import { baseUrl } from "../../config/env"; // 引入公共配置
-
 import { mapActions,mapState } from "vuex";
 export default {
   data() {
