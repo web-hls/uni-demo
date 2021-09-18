@@ -4,10 +4,10 @@
     <view class="basic-info">
       <view class="basic-info-left">
         <view class="image">
-          <image class="user__avatar" :src="img"></image>
+          <image class="user__avatar" :src="user.img == null ? '/static/default.jpg' : baseUrl+ user.img"></image>
         </view>
         <view class="nackname">
-          <text class="name fw">{{ user.nackname }}</text>
+          <text class="name fw">{{ user.nackname == null ? '未设置昵称' : user.nackname }}</text>
           <view class="brief">{{ user.brief }}</view>
         </view>
       </view>
@@ -109,16 +109,14 @@ import { mapState } from "vuex";
 export default {
   data() {
     return {
-      img: "/static/default.jpg",
+	  baseUrl,
     };
   },
   computed: mapState(["user"]),
   onLoad() {
-	  console.log(this.user)
-    if(this.user.img != "/static/default.jpg") { this.img = baseUrl + this.user.img }
+
   },
   activated() {
-    if(this.user.img != "/static/default.jpg") { this.img = baseUrl + this.user.img }
   },
   methods: {
     toEditInfo() {

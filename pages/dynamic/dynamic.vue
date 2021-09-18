@@ -7,11 +7,11 @@
 			<view class="dynamic-basic-info">
 				<!-- 头像 -->
 				<view class="image">
-					<image v-if="imageUrl" :src="imageUrl">
+					<image :src="a.user_img == null ? '/static/default.jpg' : a.user_img">
 				</view>
 				<!-- 昵称和创建时间 -->
 				<view class="text-right">
-					<view class="name">{{username}}</view>
+					<view class="name">{{a.nackname}}</view>
 					<view class="public-time">{{a.create_time}}</view>
 				</view>
 			</view>

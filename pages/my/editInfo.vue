@@ -144,7 +144,9 @@ export default {
     ...mapActions(["updateUser"]), // 拿方法
 
     getData() {
-      this.img = baseUrl + this.user.img;
+      if(this.user.img != null) {
+		  this.img = baseUrl + this.user.img;
+	  }
       this.username = this.user.nackname;
       this.sex = this.user.sex;
       this.birth_day = this.user.birth_day;
