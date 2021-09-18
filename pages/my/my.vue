@@ -8,7 +8,7 @@
         </view>
         <view class="nackname">
           <text class="name fw">{{ user.nackname == null ? '未设置昵称' : user.nackname }}</text>
-          <view class="brief">{{ user.brief }}</view>
+          <view class="brief">{{ user.brief == null ? '未设置昵称' : user.brief }}</view>
         </view>
       </view>
       <view class="basic-info-right" @click="toEditInfo">
@@ -99,9 +99,6 @@
     <view style="margin-bottom: 100rpx"></view>
   </view>
 </template>
-<!--  <button type="primary" @click="goto('/pages/index/index')">
-			  通过方法跳转到首页
-		  </button> -->
 
 <script>
 import { baseUrl } from "../../config/env";
