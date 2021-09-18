@@ -17,10 +17,10 @@
 			</view>
 			<!-- 发布的内容：文字/图片 -->
 			<view class="text_and_pictrue">
-				<view class="brief">{{a.content}}</view>
+				<pre class="brief">{{a.content}}</pre>
 				<view id="imgs">
 					<view class="imgSiae" v-for="(item,index) in a.img" :key="index">
-						<img :src="`${baseImgPath}${item}`" alt="">
+						<image :src="`${baseImgPath}${item}`" mode="scaleToFill" alt=""></image>
 					</view>
 				</view>
 			</view>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-	import { baseUrl,baseImgPath } from "../../config/env"; // 引入公共配置
+	import { baseImgPath } from "../../config/env"; // 引入公共配置
   import { mapState } from "vuex";
 	export default {
 		data() {
@@ -47,9 +47,6 @@
 				username: '', // 昵称
 				imageUrl:'',  // 头像
 				dynamicList: [],
-				dianzan: 0,
-				zhuangfa: 0,
-				like: true,
 				create_time: '',
 				content:''
 			}
@@ -199,20 +196,20 @@
 		-ms-box-sizing: border-box; /*IE8*/
 		box-sizing: border-box;
 		}
-		// img {
-		// 	display: flex;
-		// 	flex-wrap:wrap;
-		// 	width: 100%;
-		// 	height: 100%;
-		// 	object-fit: cover; //这里图片宽高都是100%，再加上object-fit属性目的是为了让不同宽高比的图片把外面的框都填满，类似放缩略图，点击查看全图得另外写
-		// }
+		image {
+			display: flex;
+			flex-wrap:wrap;
+			width: 100%;
+			height: 100%;
+			object-fit: cover; //这里图片宽高都是100%，再加上object-fit属性目的是为了让不同宽高比的图片把外面的框都填满，类似放缩略图，点击查看全图得另外写
+		}
 		.brief {
-			text-indent:1em; // 首行缩进
-      text-align: justify; // 两端对齐
+			// text-indent:1em; // 首行缩进
+      // text-align: justify; // 两端对齐
 			margin-left: 20rpx;
 			font-size: 36rpx;
 			font-weight: 500;
-			text-align: justify;
+			// text-align: justify;
 			padding-bottom: 20rpx;
 			margin-right: 20rpx;
 			letter-spacing:2px; // letter-spacing 属性增加或减少字符间的空白（字符间距）。
