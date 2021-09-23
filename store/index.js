@@ -1,3 +1,4 @@
+// 引入 Vue 和 Vuex
 import Vue from 'vue'
 import Vuex from 'vuex'
 
@@ -7,6 +8,8 @@ import actions from './action'
 
 Vue.use(Vuex)
 
+// 设置全局访问的 state 对象
+// 要设置初始属性值
 const state = {
     user: {
         id: 1,
@@ -19,6 +22,7 @@ const state = {
     token: ''
 }
 
+// 新建一个仓库并导出对应变量
 export default new Vuex.Store({
     state,
     mutations,
