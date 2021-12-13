@@ -74,7 +74,7 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/" : {
-                    "target" : "https://394ec7f7196b.hz-iframe-svc.simplelab.cn",
+                    "target" : "https://878fc685bdda-service.simplelab.cn",
                     "changeOrigin" : true,
                     "secure" : false,
                     "pathRewrite" : {
