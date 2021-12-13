@@ -6,8 +6,8 @@
         <view class="image">
           <image class="user__avatar" :src="user.img == null ? '/static/default.jpg' : baseUrl+ user.img"></image>
         </view>
-        <view class="nackname">
-          <text class="name fw">{{ user.nackname == null ? '未设置昵称' : user.nackname }}</text>
+        <view class="nickname">
+          <text class="name fw">{{ user.nickname == null ? '未设置昵称' : user.nickname }}</text>
           <view class="brief">{{ user.brief == null ? '未设置昵称' : user.brief }}</view>
         </view>
       </view>
@@ -166,7 +166,7 @@ export default {
     height: 120rpx;
     border-radius: 50%;
   }
-  .nackname {
+  .nickname {
     margin: 40rpx 0rpx 10rpx 20rpx;
   }
   .name {

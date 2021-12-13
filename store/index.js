@@ -12,7 +12,7 @@ const state = {
         id: 1,
         img: "/static/default.jpg",
         sex: 1,
-        nackname: "阿珊~",
+        nickname: "阿珊~",
         birth_day: "2000-01-17",
         brief: "前端工程师，蓝桥签约作者",
     },

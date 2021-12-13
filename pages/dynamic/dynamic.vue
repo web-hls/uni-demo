@@ -11,7 +11,7 @@
 				</view>
 				<!-- 昵称和创建时间 -->
 				<view class="text-right">
-					<view class="name">{{a.nackname}}</view>
+					<view class="name">{{a.nickname}}</view>
 					<view class="public-time">{{a.create_time}}</view>
 				</view>
 			</view>
@@ -56,7 +56,7 @@
 		onShow(){
 			this.id = this.user.id,
 			this.imageUrl = this.user.img,
-			this.username = this.user.nackname,
+			this.username = this.user.nickname,
 			this.getList()
 		},
 

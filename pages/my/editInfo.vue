@@ -106,7 +106,7 @@ function getDate(type) {
   } else if (type === 'end') {
     year = year + 0;
   }
-  month = month > 9 ? month : '0' + month;;
+  month = month > 9 ? month : '0' + month;
   day = day > 9 ? day : '0' + day;
 
   return `${year}-${month}-${day}`;
@@ -134,9 +134,7 @@ export default {
       gender: "",
     };
   },
-
   computed: mapState(["token", "user"]), // 拿值
-
   onLoad() {
     this.getData();
   },
@@ -147,7 +145,7 @@ export default {
       if(this.user.img != null) {
 		  this.img = baseUrl + this.user.img;
 	  }
-      this.username = this.user.nackname;
+      this.username = this.user.nickname;
       this.sex = this.user.sex;
       this.birth_day = this.user.birth_day;
       this.brief = this.user.brief;
@@ -182,7 +180,7 @@ export default {
     // 改变昵称
     changeUserName(e) {
       if(e.detail.value){
-        this.updateUserData("nackname", e.detail.value);
+        this.updateUserData("nickname", e.detail.value);
       }
     },
 	  // 改变性别
